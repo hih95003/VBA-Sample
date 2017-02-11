@@ -1,0 +1,4 @@
+'日付ストリングの作成
+Public Function SetstrDate(ByVal date As Date) As String
+SetstrDate = Format(date, "yyyymmdd")
+End Function
