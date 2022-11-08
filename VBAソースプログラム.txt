@@ -1,0 +1,4860 @@
+[1]
+Sub変数の内容を入れ替える()
+  Dim tmp As Variant
+  tmp = Range("A1")				'ア
+  Range("A1") = Range("A2")			'イ
+  Range("A2") = tmp				'ウ
+End Sub
+
+[2]
+Sub ｎ桁目を取得する()
+  Dim tmp As Long
+  tmp = Range("A1")
+  tmp = tmp \ 10 ^ (Range("A2") - 1)		'ア
+  Range("A3") = tmp Mod 10			'イ
+End Sub
+
+[3] 
+Sub金種を計算をする()
+  Dim tmp As Long
+  tmp = Range("A1")				'ア
+  Range("C1") = tmp \ 10000			'イ
+  tmp = tmp Mod 10000
+  Range("C2") = tmp \ 5000			'ウ
+  tmp = tmp Mod 5000
+  Range("C3") = tmp \ 2000			'エ
+  tmp = tmp Mod 2000
+  Range("C4") = tmp \ 1000			'オ
+  tmp = tmp Mod 1000
+  Range("C5") = tmp \ 500			'カ
+  tmp = tmp Mod 500
+  Range("C6") = tmp \ 100			'キ
+  tmp = tmp Mod 100
+  Range("C7") = tmp \ 50			'ク
+  tmp = tmp Mod 50
+  Range("C8") = tmp \ 10			'ケ
+  tmp = tmp Mod 10
+  Range("C9") = tmp \ 5			'コ
+  Range("C10") = tmp Mod 5			'サ
+End Sub
+
+[4] 
+Sub角度を一定の範囲に収める()
+  Range("A2") = Range("A1")					'ア
+  Range("A2") = Range("A2") \ 360				'イ
+  Range("A2") = Range("A1") - Range("A2") * 360		'ウ
+  If Range("A2") < 0 Then Range("A2") = Range("A2") + 360	'エ
+End Sub
+ 
+[5]
+Sub 三角関数と角度の関係()
+  Const eps = 0.0000000001
+  Dim s As Single
+  Dim c As Single
+  Dim theta As Single
+  s = Range("A1")
+  c = Range("A2")
+  If Abs(1 - s ^ 2) < eps Then					'ア
+    theta = 90
+  Else
+    theta = Atn(s / Sqr(1 - s ^ 2)) * 180 / 3.141592654
+  End If
+  If s >= 0 And c < 0 Then theta = 180 - theta			'イ
+  If s < 0 And c < 0 Then theta = 180 - theta			'ウ
+  If s < 0 And c >= 0 Then theta = 360 + theta			'エ
+  Range("A3") = theta
+End Sub
+
+[6]
+Sub数列を出力する１()
+  iti = 1
+  For i = 0 To 2				'ア
+    For j = 2 To 10 Step 2			'イ
+      Cells(iti, 1) = j * 10 ^ I		'ウ
+      iti = iti + 1
+    Next j
+  Next i
+End Sub
+
+[7]
+Sub 数列を出力する2()
+  iti = 1
+  For i = 1 To 9 Step 2			'ア
+    For j = 1 To -1 Step -2			'イ
+      Cells(iti, 1) = i * j			'ウ
+      iti = iti + 1
+    Next j
+Next i
+End Sub
+
+[8] 
+Sub加算だけで掛け算をする１()
+  Range("A3") = 0				'ア
+  For i = 1 To Range("A1")			'イ
+    Range("A3") = Range("A3") + Range("A2")	'ウ
+  Next i
+End Sub
+
+[9]
+Sub加減算だけで割り算をする()
+  Dim tmp As Integer
+  tmp = Range("A1")
+  Range("A3") = 0				'ア
+  Do While tmp >= 0			'イ
+    tmp = tmp - Range("A2")			'ウ
+    Range("A3") = Range("A3") + 1		'エ
+  Loop
+  Range("A3") = Range("A3") - 1		'オ
+  Range("A4") = tmp + Range("A2")		'カ
+End Sub
+
+[10]
+Sub加算だけで掛け算をする2()
+  Dim fu As Integer
+  Dim tmp1 As Long
+  Dim tmp2 As Long
+  fu = 0						'ア
+  If Range("A1") < 0 Then fu = fu + 1			'イ
+  tmp1 = Abs(Range("A1"))				'ウ
+  If Range("A2") < 0 Then fu = fu + 1			'エ
+  tmp2 = Abs(Range("A2"))				'オ
+  Range("A3") = 0					'カ
+  For i = 1 To tmp1					'キ
+    Range("A3") = Range("A3") + tmp2			'ク
+  Next I	
+  If fu = 1 Then Range("A3") = -Range("A3")		'ケ
+End Sub
+
+[11]
+Sub一定条件で処理を打ち切る１()
+  Dim bunbo As Single
+  Dim wa As Single
+  Dim mae As Single
+  wa = 0
+  bunbo = 1
+  Do
+    mae = wa					'ア
+    wa = wa + 1 / bunbo ^ 4			'イ
+    Cells(bunbo, 1) = wa
+    bunbo = bunbo + 1	
+  Loop While wa <> mae				'ウ
+End Sub
+
+[12]
+Sub一定条件で処理を打ち切る２()
+  Dim bunbo As Single
+  Dim wa As Single
+  Dim tmp As Single
+  wa = 0
+  bunbo = 1
+  Do
+    tmp = 1 / bunbo ^ 4			'ア
+    wa = wa + tmp
+    Cells(bunbo, 1) = wa
+    bunbo = bunbo + 1
+  Loop While tmp > 10 ^ (-5)		'イ
+End Sub
+
+[13]
+Sub 山分けをする()
+Dim a As Integer
+Dim b As Integer
+Dim iti As Integer
+Dim iti_a As Integer
+Dim iti_b As Integer
+iti = 1					'ア
+iti_a = 1
+iti_b = 1
+a = Cells(iti, 1)			'イ
+Cells(iti_a, 2) = a
+iti_a = iti_a + 1
+b = 0
+iti = iti + 1				'ウ
+Do While Cells(iti, 1) <> ""		'エ
+If a < b Then				'オ
+a = a + Cells(iti, 1)
+Cells(iti_a, 2) = Cells(iti, 1)
+iti_a = iti_a + 1
+Else
+b = b + Cells(iti, 1)
+Cells(iti_b, 3) = Cells(iti, 1)
+iti_b = iti_b + 1
+End If			
+iti = iti + 1				`カ
+Loop
+End Sub
+
+[14]
+Sub スイッチ処理をする()
+Dim sw As Integer
+Dim iti As Integer
+Dim suu As Integer
+suu = 2					'ア
+sw = 3
+iti = 1
+Do While suu <= 30			'イ
+    Cells(1, iti) = suu			'ウ
+    iti = iti + 1
+    If sw = 2 Then			'エ
+      sw = 3
+    Else
+      sw = 2
+    End If
+    suu = suu + sw			'オ
+Loop
+End Sub
+
+[15]
+Sub ローレル指数を求める()
+  Dim l As Double
+  Dim w As Double
+  Dim t As Double
+  w = Range("B1")
+  t = Range("B2")
+  l = w / t ^ 3 * 10 ^ 7			'ア
+  Range("B3") = l
+  If l < 100 Then				'イ
+    Range("B4") = "やせすぎ"
+  ElseIf l < 115 Then				'ウ
+    Range("B4") = "やせぎみ"
+  ElseIf l < 145 Then				'エ
+    Range("B4") = "平均"
+  ElseIf l < 160 Then			'オ
+    Range("B4") = "太りぎみ"
+  Else
+    Range("B4") = "太りすぎ"
+  End If
+End Sub
+
+[16]
+Sub BMIを求める()
+  Dim b As Double
+  Dim w As Double
+  Dim t As Double
+  w = Range("B1")
+  t = Range("B2")
+  b = w / t ^ 2				'ア
+  Range("B3") = b
+  If b <= 17.6 Then			'イ
+    Range("B4") = "やせすぎ"
+  ElseIf b < 19.8 Then			'ウ
+    Range("B4") = "やせぎみ"
+  ElseIf b < 24.2 Then			'エ
+    Range("B4") = "平均"
+  ElseIf b < 26.4 Then			'オ
+    Range("B4") = "太りぎみ"
+  Else
+    Range("B4") = "太りすぎ"
+  End If
+End Sub
+
+[17]
+Sub 不快指数を求める()
+  Dim t As Double
+  Dim h As Double
+  Dim di As Double
+  t = Range("B1")
+  h = Range("B2")
+  di = 0.81 * t + 0.01 * h * (0.99 * t - 14.3) + 46.3	'ア
+  Range("B3") = di
+  If di < 70 Then					'イ
+    Range("B4") = "暑さを感じない"
+  ElseIf di < 75 Then					'ウ
+    Range("B4") = "一部の人は不快"
+  ElseIf di < 80 Then					'エ
+    Range("B4") = "半数以上が不快"
+  ElseIf di < 85 Then					'オ
+    Range("B4") = "全員が不快"
+  Else
+    Range("B4") = "耐えがたい"
+  End If
+End Sub
+
+[18]
+Sub チェックデジットを求める()
+  Dim jan As Variant
+  Dim guu As Long
+  Dim kis As Long
+  Dim i As Integer
+  jan = Range("A1")
+  guu = 0						'ア
+  kis = 0
+  For i = 1 To 6					'イ
+    guu = guu + Val(Mid(jan, i * 2, 1))		'ウ
+    kis = kis + Val(Mid(jan, (i * 2 - 1), 1))		'エ
+  Next i
+  Range("B1") = guu
+  Range("c1") = kis
+  Range("A2") = 10 - ((guu * 3 + kis) Mod 10)		'オ
+End Sub
+
+[19]
+Sub 水差し問題を解く()
+  Dim a As Integer
+  Dim b As Integer
+  Dim v As Integer
+  Dim xa As Integer
+  Dim xb As Integer
+  Dim n As Integer
+  Dim mes As String
+  a = Range("A1")
+  b = Range("B1")
+  v = Range("C1")
+  n = 1						'ア
+  xa = 0
+  xb = 0
+  Do
+    If xa = 0 Then				'イ
+      mes = "Aに汲む "
+      xa = a
+    Else
+      If xb = b Then				'ウ
+        mes = "Bを空に "
+        xb = 0
+      Else
+        If xa < b - xb Then			'エ
+          mes = "AをBにすべて "
+          xb = xa + xb
+          xa = 0
+        Else
+          mes = "AをBに入るだけ "
+          xa = xa - b + xb
+          xb = b
+        End If
+      End If
+    End If
+    mes = mes + "A" + Str(xa) + " B" + Str(xb)	
+    n = n + 1
+    Cells(n, 1) = mes
+  Loop While xa <> v And xb <> v		'オ
+  If xa = v Then				'カ
+    Cells(n + 1, 1) = "Aに" + Str(v) + "Ｌ"
+  Else
+    Cells(n + 1, 1) = "Bに" + Str(v) + "Ｌ"
+  End If
+End Sub
+
+[20]
+Sub 三角形はできるか()
+  Dim a As Variant
+  Dim b As Variant
+  Dim c As Variant
+  a = Range("A1")
+  b = Range("A2")
+  c = Range("A3")
+  If (a + b > c) And (Abs(a - b) < c) Then		'ア
+    Range("A4") = "できる"
+  Else
+    Range("A4") = "できない"
+  End If
+End Sub
+
+[21]
+Sub 周囲が最長の三角形を求める()
+  Dim iti As Integer
+  iti = 1
+  Do While Cells(iti + 3, 1) <> ""					'ア
+    If Cells(iti, 1) < Cells(iti + 1, 1) + Cells(iti + 2, 1) Then	'イ
+      Range("C1") = Cells(iti, 1)					'ウ
+      Range("C2") = Cells(iti + 1, 1)
+      Range("C3") = Cells(iti + 2, 1)
+      Exit Sub
+    End If
+    iti = iti + 1
+  Loop	
+  Range("C1") = "できません"						'エ
+End Sub
+
+[22]
+Sub 三角形の形を調べる()
+  Dim a As Variant
+  Dim b As Variant
+  Dim c As Variant
+  Dim tmp As Variant
+  a = Range("A1")
+  b = Range("A2")
+  c = Range("A3")
+  If a > c Then
+    tmp = a
+    a = c
+    c = tmp
+  End If
+  If b > c Then
+    tmp = b
+    b = c
+    c = tmp
+  End If
+  If a ^ 2 + b ^ 2 > c ^ 2 Then Range("A4") = "鋭角"
+  If a ^ 2 + b ^ 2 = c ^ 2 Then Range("A4") = "直角"
+  If a ^ 2 + b ^ 2 < c ^ 2 Then Range("A4") = "鈍角"
+End Sub
+
+[23]
+Sub 二次方程式の解を求める()
+  Dim a As Double
+  Dim b As Double
+  Dim c As Double
+  Dim d As Double
+  Dim r1 As Double
+  Dim r2 As Double
+  Dim i1 As Double
+  Dim i2 As Double
+  a = Range("A1")
+  b = Range("A2")
+  c = Range("A3")
+  d = b * b - 4 * a * c					'ア
+  If d > 0 Then               '実数解２個		'イ
+    r1 = (-b + Sqr(d)) / (2 * a)
+    r2 = (-b - Sqr(d)) / (2 * a)
+    i1 = 0
+    i2 = 0
+      Range("c5") = Sqr(12)
+  End If
+  If d = 0 Then               '実数解１個		'ウ
+    r1 = -b / (2 * a)
+    i1 = 0
+  End If
+  If d < 0 Then               '虚数解			'エ
+    r1 = -b / (2 * a)
+    r2 = r1
+    i1 = Sqr(-d) / (2 * a)
+    i2 = -i1
+  End If
+  If d = 0 Then
+    Range("C1") = r1
+    Range("D1") = "+i"
+    Range("E1") = i1
+  Else
+    Range("C1") = r1
+    Range("D1") = "+i"
+    Range("E1") = i1
+    Range("C2") = r2
+    Range("D2") = "+i"
+    Range("E2") = i2
+  End If
+End Sub
+
+[24]
+Sub 階乗を求める()
+  Dim kai As Long
+  Dim i As Long
+  Dim n As Long
+  n = Range("A1")
+  kai = 1					'ア
+  For i = 2 To n				'イ
+    kai = kai * I				'ウ
+  Next i
+  Range("B1") = kai
+End Sub
+
+[25]
+Sub 最大公約数を求める()
+  Dim a As Long
+  Dim b As Long
+  Dim amari As Long
+  a = Range("A1")
+  b = Range("A2")
+  Do
+    amari = a Mod b				'ア
+    a = b					'イ
+    b = amari
+  Loop While amari <> 0				'ウ
+  Range("A3") = a				'エ
+End Sub
+
+[26]
+Sub 三数以上の最大公約数を求める()
+  Dim x(10) As Long
+  Dim amari As Long
+  Dim a As Long
+  Dim b As Long
+  Dim i As Integer
+  i = 1
+  Do
+    x(i) = Cells(1, i)
+    i = i + 1
+  Loop While Cells(1, i) <> ""
+  i = i - 1
+  Do
+    a = x(i)				'ア
+    b = x(i - 1)
+    Do					'イ
+      amari = a Mod b
+      a = b
+      b = amari
+    Loop While amari <> 0
+    x(i - 1) = a			'ウ
+    If a = 1 Then Exit Do		'エ
+    i = i - 1				'オ
+  Loop While i > 1			'カ
+  Cells(2, 1) = a			'キ
+End Sub
+
+[27]
+Sub 最小公倍数を求める()
+  Dim a As Long
+  Dim b As Long
+  Dim amari As Long
+  a = Range("A1")
+  b = Range("A2")
+  Do							'ア
+    amari = a Mod b
+    a = b
+    b = amari
+  Loop While amari <> 0
+  Range("A3") = Range("A1") / a * Range("A2")		'イ
+End Sub
+
+[28]
+Sub 拡張ユークリッドの互除法を使う()
+  Dim x1 As Long
+  Dim x2 As Long
+  Dim x As Long
+  Dim y1 As Long
+  Dim y2 As Long
+  Dim y As Long
+  Dim z1 As Long
+  Dim z2 As Long
+  Dim z As Long
+  Dim p As Long
+  Dim q As Long
+  z1 = Range("A1")				'ア
+  z2 = Range("B1")
+  x1 = 1					'イ
+  y1 = 0
+  x2 = 0
+  y2 = 1
+  Do
+    q = z1 \ z2					'ウ
+    x = x1 - q * x2				'エ
+    y = y1 - q * y2
+    z = z1 - q * z2
+    x1 = x2					'オ
+    y1 = y2
+    z1 = z2
+    x2 = x					'カ
+    y2 = y
+    z2 = z
+  Loop While z <> 0				'キ
+  Range("A2") = x1				'ク
+  Range("B2") = y1
+  Range("c2") = z1
+End Sub
+
+[29]
+Sub 約分する()
+  Dim a As Long
+  Dim b As Long
+  Dim tmp As Long
+  Dim amari As Long
+  a = Range("A1")
+  b = Range("A2")
+  Do					'ア
+    amari = a Mod b
+    a = b
+    b = amari
+  Loop While amari <> 0
+  Range("A1") = Range("A1") / a		'イ
+  Range("A2") = Range("A2") / a		'ウ
+End Sub
+
+[30]
+Sub 互いに素か調べる()
+  Dim a As Long
+  Dim b As Long
+  Dim tmp As Long
+  Dim amari As Long
+  a = Range("A1")
+  b = Range("B1")
+  If a < b Then				'ア
+    tmp = a
+    a = b
+    b = tmp
+  End If
+  Do					'イ
+    amari = a Mod b
+    a = b
+    b = amari
+  Loop While amari <> 0
+  If a = 1 Then				'ウ
+    Range("C1") = "○"
+  Else
+    Range("C1") = "×"
+  End If
+End Sub
+
+[31]
+Sub 互いに素の数の個数()
+  Dim n As Integer
+  Dim p As Integer
+  Dim eul As Integer
+  n = Range("A1")
+  eur = n				'ア
+  p = 2					'イ
+  If (n Mod p) = 0 Then		
+    eur = eur * (1 - 1 / p)
+    Do While (n Mod p) = 0
+      n = n \ p
+    Loop
+  End If
+  p = 3					'ウ
+  Do While 1 < n			
+    If (n Mod p) = 0 Then		
+      eur = eur * (1 - 1 / p)
+      Do While (n Mod p) = 0
+        n = n \ p
+      Loop
+    End If
+    p = p + 2				'エ
+  Loop
+  Range("A2") = eur
+End Sub
+
+[32]
+Sub 因数分解をする()
+  Dim n As Long
+  Dim x As Long
+  Dim y As Long
+  Dim w As Long
+  n = Range("A1")
+  x = Int(Sqr(n) + 1)				'ア
+  y = Int(Sqr(x ^ 2 - n))
+  Do						'イ
+    w = x ^ 2 - y ^ 2 - n			'ウ
+    If w = 0 Then Exit Do			'エ
+    If w < 0 Then x = x + 1			'オ
+    If 0 < w Then y = y + 1			'カ
+  Loop
+  Range("A2") = x + y				'キ
+  Range("B2") = x - y
+End Sub
+
+[33]
+Sub ゴールドバッハの予想を確かめる()
+  Dim so(1000) As Integer
+  Dim i As Integer
+  Dim j As Integer
+  Dim n As Integer
+  Dim iti As Integer
+  'エラストテネスで素数表を作る			'ア
+  For i = 1 To 1000
+    so(i) = 0
+  Next i
+  For i = 4 To 1000 Step 2
+    so(i) = 1
+  Next i
+  For i = 3 To 32
+    For j = i * 2 To 1000 Step i
+      so(j) = 1
+    Next j
+  Next i
+  n = Range("A1")
+  iti = 2
+  For i = 2 To n / 2				'イ
+    For j = n - i To n
+      If so(i) = 0 And so(j) = 0 Then		'ウ
+        If (i + j) = n Then
+          Cells(iti, 1) = i
+          Cells(iti, 2) = j
+          iti = iti + 1
+        End If
+      End If
+    Next j
+  Next i
+End Sub
+
+[34]
+Sub ピタゴラス数を求める()
+  Dim iti As Integer
+  Dim m As Integer
+  Dim n As Integer
+  Dim t1 As Integer
+  Dim t2 As Integer
+  Dim amari As Integer
+  iti = 1
+  For n = 1 To 5					'ア
+    For m = n + 1 To 7 Step 2
+      t1 = m
+      t2 = n
+      Do						'イ
+        amari = t1 Mod t2
+        t1 = t2
+        t2 = amari
+      Loop While amari <> 0
+      If t1 = 1 Then					'ウ
+        Cells(iti, 1) = m * m - n * n
+        Cells(iti, 2) = 2 * m * n
+        Cells(iti, 3) = m * m + n * n
+        iti = iti + 1
+      End If
+    Next m
+  Next n
+End Sub
+
+[35]
+Sub 約数を求める()
+  Dim i As Integer
+  Dim iti As Integer
+
+  iti = 1
+  For i = 1 To Range("A1") / 2			'ア
+    If Range("A1") Mod i = 0 Then		'イ
+      Cells(iti, 2) = i
+      iti = iti + 1
+    End If
+  Next i
+  Cells(iti, 2) = Range("A1")			'ウ
+End Sub
+
+[36]
+Sub 和の完全数を求める()
+  Dim i As Long
+  Dim j As Long
+  Dim wa As Long
+  Dim iti As Integer
+  iti = 1
+  For i = 2 To 500				'ア
+    wa = 0					'イ
+    For j = 1 To i / 2			
+      If i Mod j = 0 Then
+        wa = wa + j
+      End If
+    Next j
+    If i = wa Then				'ウ
+      Cells(iti, 1) = i
+      iti = iti + 1
+    End If
+  Next i
+End Sub
+
+[37]
+Sub 積の完全数を求める()
+  Dim i As Long
+  Dim j As Long
+  Dim seki As Long
+  Dim iti As Integer
+  iti = 1
+  For i = 2 To 30			'ア
+    seki = 1				'イ
+    For j = 1 To i / 2
+      If i Mod j = 0 Then
+        seki = seki * j
+      End If
+    Next j
+    If i = seki Then			'ウ
+      Cells(iti, 1) = i
+      iti = iti + 1
+    End If
+  Next i
+End Sub
+
+[38]
+Sub 累乗を求める()
+  Dim x As Long
+  Dim y As Long
+  Dim tmp As Long
+  Dim ans As Long
+  Dim amari As Integer
+  Dim chk As Integer
+  Dim kisu As Integer
+  Dim i As Integer
+  x = Range("A1")				
+  y = Range("A2")	
+  insuu = 2					'ア
+  ans = x	
+  amari = y Mod 2				'イ
+  y = y - amari
+  iti = 1
+  Do While y > 1				'ウ
+    chk = 0
+    For i = 2 To Sqr(insuu)			'エ
+      If insuu Mod i = 0 Then chk = 1
+    Next i
+    If (chk = 0) And (y Mod insuu = 0) Then	'オ
+      tmp = 1
+      For i = 1 To insuu
+        tmp = tmp * ans
+      Next i
+      ans = tmp
+      y = y / insuu
+    Else
+      insuu = insuu + 1
+    End If
+  Loop
+  If amari = 1 Then ans = ans * x		'カ
+  Range("A3") = ans
+End Sub
+
+[39]
+Sub べき剰余を求める()
+  Dim p As Integer
+  Dim q As Integer
+  Dim m As Integer
+  Dim amari As Integer
+  p = Range("A1")
+  q = Range("A2")
+  m = Range("A3")
+  amari = 1		
+  Do While q > 0			'ア
+    amari = (amari * p) Mod m		'イ
+    q = q - 1				'ウ
+  Loop
+  Range("A4") = amari
+End Sub
+
+[40]
+Sub 素数を生成する()
+  Dim a(100) As Integer
+  Dim n As Integer
+  Dim i As Integer
+  Dim j As Integer
+  Dim iti
+  n = 100
+  For i = 2 To n			'配列初期化　　        　ア
+    a(i) = 0
+  Next i
+  For i = 4 To n Step 2			'２の倍数に印　　　　　　イ
+    a(i) = 1
+  Next i
+  For i = 3 To Sqr(n)			'３以上の奇数の倍数に印　ウ
+    For j = i * 2 To n Step i
+      a(j) = 1
+    Next j
+  Next i
+  iti = 1
+  For i = 2 To n			'印の無い値を出力　　　　エ
+    If a(i) = 0 Then
+      Cells(1, iti) = i
+      iti = iti + 1
+    End If
+  Next i
+End Sub
+ 
+[41]
+Sub 素数かとうか調べる1()
+  Dim a As Long
+  Dim i As Integer
+  Dim sw As Integer
+  a = Range("A1")
+  sw = 0
+  For i = 2 To Sqr(a)			'ア
+   If a Mod i = 0 Then sw = 1		'イ
+  Next i
+  If sw = 0 Then			'ウ
+    Range("A2") = "素数"
+  Else
+    Range("A2") = "合成数"
+  End If
+End Sub
+
+[42]
+Sub素数かどうか調べる２()
+  Dim p As Long
+  Dim p_1 As Long
+  Dim a As Long
+  Dim amari As Long
+  Dim n As Long
+  n = Range("A1")
+  p = n
+  a = 2
+  '最大公約数					'ア
+  Do
+    amari = p Mod a
+    p = a
+    a = amari
+  Loop While amari <> 0
+  If p <> 1 Then				'イ
+    Range("A2") = "合成数"
+  Else
+    'べき剰余					'ウ
+    a = 2
+    p = n
+    p_1 = p - 1
+    amari = 1
+    Do While p_1 > 0	
+      amari = (amari * a) Mod p
+      p_1 = p_1 - 1
+    Loop
+    If amari = 1 Then				'エ
+      Range("A2") = "素数"
+    Else
+      Range("A2") = "合成数"
+    End If
+  End If
+End Sub
+ 
+[43]
+Sub素数かどうか調べる３()
+  Dim n As Long
+  Dim q As Long
+  Dim k As Long
+  Dim a As Long
+  Dim y As Long
+  Dim amari As Long
+  Dim sw  As Integer
+  Dim i As Integer
+  n = Range("a1")
+a = 2						'ア
+  k = 0
+  q = n - 1
+  Do While (q Mod 2) = 0			'イ
+    q = q \ 2
+    k = k + 1
+  Loop
+  'y = a^q　mod　n				'ウ
+  s = q
+  amari = 1
+    Do While s > 0
+      amari = (amari * a) Mod n
+      s = s - 1
+    Loop
+  y = amari
+  sw = 0
+  If n = 2 Then sw = 1				'エ
+  If y = 1 Then sw = 1				'オ
+  If y = n - 1 Then sw = 1			'カ
+  If sw = 0 Then				'キ
+    For i = 1 To k - 1
+      'y = power(y, 2, n)
+      r = y
+      s = 2
+      amari = 1
+      Do While s > 0
+        amari = (amari * r) Mod n
+        s = s - 1
+      Loop
+      y = amari
+      If y = 1 Then Exit For
+      If y = n - 1 Then
+        sw = 1
+        Exit For
+      End If
+    Next i
+  End If
+  If sw = 1 Then				'ク
+    Range("A2") = "素数"
+  Else
+    Range("A2") = "合成数"
+  End If
+End Sub
+
+[44]
+Sub 素因数分解をする1()
+  Dim insuu As Integer
+  Dim suu As Long
+  Dim i As Integer
+  Dim chk As Integer
+  Dim iti As Integer
+  suu = Range("A1")
+  insuu = 2
+  iti = 1
+  Do While suu > 1					'ア
+        chk = 0
+        For i = 2 To Sqr(insuu)				'イ
+            If insuu Mod i = 0 Then chk = 1
+        Next i
+        If (chk = 0) And (suu Mod insuu = 0) Then	'ウ
+            Cells(iti, 2) = insuu
+            suu = suu / insuu
+            iti = iti + 1
+        Else
+            insuu = insuu + 1
+        End If
+    Loop
+End Sub
+
+[45]
+Sub 素因数分解をする2()
+  Dim suu As Long
+  Dim insuu As Long
+  Dim iti As Integer
+  Dim plus  As Integer
+  suu = Range("A1")
+  iti = 1
+  Do While suu Mod 2 = 0 And suu > 1			'ア
+    Cells(iti, 2) = 2
+    suu = suu / 2
+    iti = iti + 1
+  Loop
+  Do While suu Mod 3 = 0 And suu > 1			'イ
+    Cells(iti, 2) = 3
+    suu = suu / 3
+    iti = iti + 1
+  Loop
+  plus = 2
+  insuu = 5
+  Do While suu > 1					'ウ
+    Do While suu Mod insuu = 0
+      Cells(iti, 2) = insuu
+      suu = suu / insuu
+      iti = iti + 1
+    Loop
+    insuu = insuu + plus				'エ
+    If plus = 2 Then
+      plus = 4
+    Else
+      plus = 2
+    End If
+  Loop
+End Sub
+
+[46]
+Sub 最大値の位置を調べる1()
+  Dim iti As Integer
+  Dim dai As Variant
+  Dim i As Integer
+  dai = Range("A1")				'ア
+  iti = 1
+  i = 1
+  Do While Cells(i, 1) <> ""			'イ
+    If dai < Cells(i, 1) Then			'ウ
+      dai = Cells(i, 1)
+      iti = i
+    End If
+    i = i + 1
+  Loop
+  Range("B1") = iti				'エ
+End Sub
+
+[47]
+Sub 最大値の位置を調べる2()
+  Dim iti As Integer
+  Dim dai As Variant
+  Dim i As Integer
+  dai = -1					'ア
+  i = 1
+  Do While Cells(i, 1) <> ""			'イ
+    If dai < Cells(i, 1) Then			'ウ
+      dai = Cells(i, 1)
+      iti = i
+    End If
+    i = i + 1
+  Loop
+  Range("B1") = iti
+End Sub
+
+[48]
+Sub 最大値の位置を調べる3()
+  Dim tate As Integer
+  Dim yoko As Integer
+  Dim x As Integer
+  Dim y As Integer
+  Dim dai As Variant
+  tate = 1				'ア
+  yoko = 1
+x = 1
+  y = 1
+  dai = Cells(y, x)
+  Do While Cells(y, x) <> ""		'イ
+    Do While Cells(y, x) <> ""
+      If dai < Cells(y, x) Then		'ウ
+        dai = Cells(y, x)
+        tate = y
+        yoko = x
+      End If
+      x = x + 1
+    Loop
+    x = 1
+    y = y + 1
+  Loop
+  Range("D1") = yoko
+  Range("D2") = tate
+End Sub
+
+[49]
+Sub ベストスリーを求める()
+  Dim box(10) As Variant
+  Dim min As Variant
+  Dim min_p As Integer
+  Dim m  As Integer
+  Dim i As Integer
+  Dim j As Integer
+  m = 3
+  For i = 1 To m				'ア
+    box(i) = -1
+  Next i
+  min = -1
+  min_p = 1
+  i = 1
+  Do While Cells(1, i) <> ""		'イ
+   If Cells(1, i) > min Then		'ウ
+     box(min_p) = Cells(1, i)		'エ
+     min = 9999
+     For j = 1 To m			'オ
+       If min > box(j) Then
+         min = box(j)
+         min_p = j
+       End If
+     Next j
+   End If
+   i = i + 1
+  Loop
+  For i = 1 To m
+    Cells(3, i) = box(i)
+  Next i
+End Sub
+
+[50] 
+Sub 重複をチェックする()
+  Dim i As Integer
+  Dim j As Integer
+  Dim iti1 As Integer
+  Dim iti2 As Integer
+  Dim chk As Integer
+  chk = 0							'ア
+  iti1 = 1
+  Do While Cells(1, iti1 + 1) <> ""				'イ
+    iti2 = iti1 + 1
+    Do While Cells(1, iti2) <> ""
+      If Cells(1, iti1) = Cells(1, iti2) Then chk = 1		'ウ
+      iti2 = iti2 + 1
+    Loop
+    iti1 = iti1 + 1
+  Loop
+  If chk = 0 Then						'エ
+    Range("A2") = "○"
+  Else
+    Range("A2") = "×"
+  End If
+End Sub
+
+[51]
+Sub 同じ値があるか調べる()
+  Dim iti As Integer
+  Dim chk As Integer
+  iti = 1
+  Do While Cells(1, iti) <> ""					'ア
+    chk = iti + 1
+    Do While Cells(1, chk) <> ""					'イ
+      If Cells(1, iti) = Cells(1, chk) Then Cells(2, chk) = "○"		'ウ
+      chk = chk + 1
+    Loop
+    iti = iti + 1
+  Loop
+End Sub
+
+[52]
+Sub データの種類を調べる１()
+  Dim iti As Integer
+  Dim chk As Integer
+  Dim ban As Integer
+  iti = 1						'ア
+  ban = 1
+  Do While Cells(1, iti) <> ""			'イ
+    If Cells(2, iti) = "" Then			'ウ
+      Cells(2, iti) = ban
+      chk = iti + 1
+      Do While Cells(1, chk) <> ""			'エ
+        If Cells(1, iti) = Cells(1, chk) Then		'オ
+          Cells(2, chk) = 0
+        End If
+        chk = chk + 1
+      Loop
+      ban = ban + 1
+    End If
+    iti = iti + 1
+  Loop
+End Sub
+
+[53]
+Sub データの種類を調べる２()
+  Dim iti As Integer
+  Dim chk As Integer
+  Dim ban As Integer
+  iti = 1						'ア
+  ban = 1
+  Do While Cells(1, iti) <> ""				'イ
+    If Cells(2, iti) = "" Then				'ウ
+      Cells(2, iti) = ban
+      chk = iti + 1
+      Do While Cells(1, chk) <> ""			'エ
+        If Cells(1, iti) = Cells(1, chk) Then		'オ
+          Cells(2, chk) = ban
+        End If
+        chk = chk + 1
+      Loop
+      ban = ban + 1
+    End If
+    iti = iti + 1
+  Loop
+End Sub
+
+[54]
+Sub データを左シフトする()
+  Dim kai As Integer
+  Dim iti As Integer
+  For kai = 1 To Range("A2")				'ア
+    iti = 2
+    Do While Cells(1, iti) <> ""			'イ
+      Cells(1, iti - 1) = Cells(1, iti)			'ウ
+      iti = iti + 1
+    Loop
+    Cells(1, iti - 1) = ""				'エ
+  Next kai
+End Sub
+
+[55]
+Sub データを右シフトする()
+  Dim kai As Integer
+  Dim iti As Integer
+  Dim kari1 As Variant
+  Dim kari2 As Variant
+  For kai = 1 To Range("A2")			'ア
+    iti = 1
+    kari1 = Range("A1")
+    Do While Cells(1, iti + 1) <> ""		'イ
+      kari2 = Cells(1, iti + 1)			'ウ
+      Cells(1, iti + 1) = kari1
+      kari1 = kari2
+      iti = iti + 1
+    Loop
+  Next kai
+  For kai = 1 To Range("A2")			'エ
+    Cells(1, kai) = ""
+  Next kai
+End Sub
+
+[56]
+Sub データを左ローテーションする()
+  Dim iti As Integer
+  Dim kai As Integer
+  Dim kari As Variant
+  For kai = 1 To Range("A2")			'ア
+    kari = Range("A1")
+    iti = 2
+    Do While Cells(1, iti) <> ""		'イ
+      Cells(1, iti - 1) = Cells(1, iti)
+      iti = iti + 1
+    Loop
+    Cells(1, iti - 1) = kari			'ウ
+  Next kai
+End Sub
+
+[57]
+Sub データを右ローテーションする()
+  Dim kai As Integer
+  Dim iti As Integer
+  Dim kari1 As Variant
+  Dim kari2 As Variant
+  For kai = 1 To Range("A2")			'ア
+    iti = 1
+    kari1 = Range("A1")
+    Do While Cells(1, iti + 1) <> ""		'イ
+      kari2 = Cells(1, iti + 1)			'ウ
+      Cells(1, iti + 1) = kari1
+      kari1 = kari2
+      iti = iti + 1
+    Loop
+    Range("A1") = kari1				'エ
+  Next kai
+End Sub
+
+[58]
+Sub データが何番目にあるか求める()
+  Dim mozi As Variant
+  Dim a1 As Variant
+  Dim iti As Integer
+  mozi = Array("0", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J")
+  a1 = Range("A1")				'ア
+  iti = 0
+  Do While a1 <> mozi(iti)			'イ
+    iti = iti + 1
+  Loop
+  Range("A2") = iti				'ウ
+End Sub
+
+[59] 
+Sub数と一致する数列の和の範囲を求める()
+  Dim atai As Integer
+  Dim mat(20) As Integer
+  Dim mp As Integer
+  Dim ap As Integer
+  Dim n As Integer
+  Dim sum As Integer
+  Dim i As Integer
+  Dim iti As Integer
+  n = 1
+  Do While Cells(1, n) <> ""	
+    mat(n) = Cells(1, n)
+    n = n + 1
+  Loop
+  atai = Range("A2")
+  iti = 4
+  mp = 1
+  ap = 1
+  sum = mat(mp)
+  Do						'ア
+    If sum = atai Then				'イ
+      For i = ap To mp
+        Cells(iti, i) = mat(i)
+      Next i
+      iti = iti + 1
+    End If
+    If sum < atai And mp < n Then		'ウ
+      mp = mp + 1
+      sum = sum + mat(mp)
+    Else
+      sum = sum - mat(ap)
+      ap = ap + 1
+    End If
+  Loop Until ap > n
+End Sub
+
+[60]
+Sub 状態の変化を見る()
+  Dim a(4) As Single
+  Dim mae(4) As Single
+  Dim b(4) As Single
+  Dim idou(4, 4) As Single
+  Dim i As Integer
+  Dim j As Integer
+  For i = 1 To 4
+    For j = 1 To 4
+      idou(i, j) = Cells(j, i)
+    Next j
+  Next i
+  For i = 1 To 4
+    a(i) = 200
+  Next i
+  Do
+    For i = 1 To 4					'ア
+      mae(i) = a(i)
+    Next i
+    For i = 1 To 4
+      b(i) = 0
+    Next i
+    For i = 1 To 4					'イ
+      For j = 1 To 4
+        b(i) = b(i) + a(j) * idou(i, j)
+      Next j
+    Next i
+    For i = 1 To 4					'ウ
+      a(i) = b(i)
+    Next i
+  Loop While a(1) <> mae(1) Or a(2) <> mae(2) Or a(3) <> mae(3) Or a(4) <> mae(4)
+  For i = 1 To 4
+    Cells(6, i) = a(i)
+  Next i
+End Sub
+
+[61]
+Sub 奇数の魔方陣を作る()
+  Dim n As Integer
+  Dim x As Integer
+  Dim y As Integer
+  Dim i As Integer
+  n = 3					'ア
+  x = n \ 2 + 1
+  y = 1
+  Cells(y, x) = 1
+  For i = 2 To n ^ 2
+    If i Mod n = 1 Then			'イ
+      y = y + 1
+    Else
+      x = x + 1
+      y = y - 1
+    End If
+    If x > n Then x = 1			'ウ
+    If y < 1 Then y = n			'エ
+    Cells(y, x) = i
+  Next i
+End Sub
+
+[62]
+Sub 四の倍数の魔方陣を作る()
+  Dim n As Integer
+  Dim mat(20, 20) As Integer
+  Dim x As Integer
+  Dim y As Integer
+  Dim i As Integer
+  n = 8
+  i = 1								'ア
+  For y = 1 To n
+    For x = 1 To n
+      mat(x, y) = i
+      i = i + 1
+    Next x
+  Next y
+  i = 1								'イ
+  For y = n To 1 Step -1
+    For x = n To 1 Step -1
+      If ((x Mod 4) - (y Mod 4)) = 0 Then mat(x, y) = I		'ウ
+      If ((x Mod 4) + (y Mod 4)) Mod 4 = 1 Then mat(x, y) = I	'エ
+      i = i + 1
+    Next x
+  Next y
+  For y = 1 To n
+    For x = 1 To n
+      Cells(y, x) = mat(x, y)
+    Next x
+  Next y
+End Sub
+
+[63]
+Sub 十進数をn進数に変換する()
+  Dim mozi As Variant
+  Dim shin10 As Integer
+  Dim shin_n As Integer
+  Dim nagasa As Integer
+  Dim i As Integer
+  Dim tmp(20) As Variant
+  Dim kari As Variant
+  Dim out As String
+  mozi = Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F")
+  out = ""
+  shin10 = Range("A1")
+  shin_n = Range("B1")
+  nagasa = 0
+  Do
+    amari = shin10 Mod shin_n				'ア
+    tmp(nagasa) = mozi(amari)
+    shin10 = shin10 \ shin_n				'イ
+    nagasa = nagasa + 1
+  Loop While shin10 > 0
+  '逆順の文字列に変換					'ウ
+  For i = 1 To nagasa
+    out = out + tmp(nagasa - i)
+  Next i
+  Range("A2") = out
+End Sub
+
+[64]
+Sub n進数を十進数に変換する()
+  Dim mozi As Variant
+  Dim shin10 As Integer
+  Dim shin_n As Integer
+  Dim nshin As Variant
+  Dim keta As Integer
+  Dim iti As Integer
+  Dim bai As Integer
+  mozi = Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F")
+  nshin = Range("A1")
+  shin_n = Range("B1")
+  keta = Len(nshin)
+  shin10 = 0
+  bai = 1
+  Do While keta > 0
+    iti = 0
+    Do While Mid(nshin, keta, 1) <> mozi(iti)	'ア
+      iti = iti + 1
+    Loop
+    shin10 = shin10 + iti * bai			'イ
+    keta = keta - 1				'ウ
+    bai = bai * shin_n				'エ
+  Loop
+  Range("A2") = shin10
+End Sub
+
+[65]
+Sub 小数点を含む十進数を2進数に変換する()
+  Dim zyussin As Double
+  Dim nisin As Double
+  Dim beki As Double
+  Dim ans As Double
+  beki = 256 '2~8						'ア
+  nisin = 100000000 '=2^8  ２進数の表現を借りた１０進数
+  ans = 0
+  zyussin = Range("A1")
+  Do While zyussin > 0.0078125　'処理打ち切り			'イ
+    If beki <= zyussin Then					'ウ
+      ans = ans + nisin
+      zyussin = zyussin - beki
+      If zyussin = 0 Then Exit Do				'エ
+    End If
+    beki = beki / 2						'オ
+    nisin = nisin / 10 '１桁下げる
+  Loop
+  Range("A2") = ans
+End Sub
+
+[66]
+Sub 一のビットの数を数える()
+  Dim moto As Integer
+  Dim suu As Integer
+  moto = Range("A1")
+  Do While moto > 0			'ア
+    moto = moto And moto - 1		'イ
+    suu = suu + 1			'ウ
+  Loop
+  Range("A2") = suu
+End Sub
+
+[67]
+Sub ビット列を逆転する()
+  Dim suu As Integer
+  Dim tmp As Integer
+  suu = Range("A1")
+  tmp = suu
+  tmp = tmp * 16				'ア
+  tmp = tmp And 240
+  suu = suu \ 16				'イ
+  suu = suu And 15
+  suu = suu Or tmp
+  Range("a2") = suu
+  tmp = suu
+  tmp = tmp * 4					'ウ
+  tmp = tmp And 204
+  suu = suu \ 4					'エ
+  suu = suu And 51
+  suu = suu Or tmp
+  Range("A2") = suu
+  tmp = suu
+  tmp = tmp * 2					'オ
+  tmp = tmp And 170
+  suu = suu \ 2					'カ
+  suu = suu And 85
+  suu = suu Or tmp
+  Range("A2") = suu
+End Sub
+
+[68]
+Sub 多段桁で整数の加算をする()
+  Dim a(20) As Integer
+  Dim b(20) As Integer
+  Dim c(20) As Integer
+  Dim keta As Integer
+  Dim i As Integer
+  Dim saidai As Integer
+  saidai = 10 ':最上位桁数
+  For i = 1 To saidai 　　 '入力
+    a(saidai + 1 - i) = Cells(1, i)
+    b(saidai + 1 - i) = Cells(2, i)
+    c(saidai + 1 - i) = 0
+  Next i
+  keta = 0				
+  For i = 1 To saidai				
+    c(i) = a(i) + b(i) + keta			'ア
+    keta = c(i) \ 10  '桁上り			'イ
+    c(i) = c(i) Mod 10 '1桁目			'ウ
+  Next i
+  For i = 1 To saidai
+    Cells(3, i) = c(saidai + 1 - i)
+  Next i
+End Sub
+
+[69]
+Sub 細菌の数を計算する()
+  Dim a(20) As Integer
+  Dim b(20) As Integer
+  Dim c(20) As Integer
+  Dim keta As Integer
+  Dim i As Integer
+  Dim j As Integer
+  Dim saidai As Integer
+  Dim mot As Integer
+  Dim kai As Integer
+  saidai = 10 ':最上位桁数
+  moto = 1    '元の細菌数
+  For i = 1 To saidai
+    a(i) = 0
+    b(i) = 0
+    c(i) = 0
+  Next i
+  a(1) = moto
+  b(1) = moto
+  kai = 30
+  For j = 1 To kai
+    keta = 0
+    For i = 1 To saidai
+      c(i) = a(i) + b(i) + keta			'ア
+      keta = c(i) \ 10
+      c(i) = c(i) Mod 10
+    Next i
+    For i = 1 To saidai				'イ
+      a(i) = c(i)
+      b(i) = c(i)
+    Next i
+  Next j
+  For i = 1 To saidai
+    Cells(1, i) = c(saidai + 1 - i)
+  Next i
+End Sub
+
+[70]
+Sub 多段桁で整数の減算をする()
+  Dim a(20) As Integer
+  Dim b(20) As Integer
+  Dim c(20) As Integer
+  Dim i As Integer
+  Dim saidai As Integer
+  saidai = 10 ':最上位桁数
+  For i = 1 To saidai  '入力
+    a(saidai + 1 - i) = Cells(1, i)
+    b(saidai + 1 - i) = Cells(2, i)
+  Next i
+  For i = 1 To saidai				'ア
+    If a(i) < b(i) Then				'イ
+      a(i) = a(i) + 10
+      a(i + 1) = a(i + 1) - 1
+    End If
+    c(i) = a(i) - b(i)				'ウ
+  Next i
+   For i = 1 To saidai
+    Cells(3, i) = c(saidai + 1 - i)
+  Next i
+End Sub
+
+[71]
+Sub 多段桁で整数の乗算をする()
+  Dim a(20) As Integer
+  Dim b(20) As Integer
+  Dim c(20) As Integer
+  Dim one(20) As Integer
+  Dim keta As Integer
+  Dim i As Integer
+  Dim saidai As Integer
+  Dim sum As Integer
+  saidai = 10 ':最上位桁数
+  For i = 1 To saidai  '入力
+    a(saidai + 1 - i) = Cells(1, i)
+    b(saidai + 1 - i) = Cells(2, i)
+    c(saidai + 1 - 1) = 0
+    one(saidai + 1 - 1) = 0
+  Next i
+  one(1) = 1						'ア
+  Do
+   '加算						'イ
+    keta = 0
+    For i = 1 To saidai
+      c(i) = c(i) + a(i) + keta
+      keta = c(i) \ 10
+      c(i) = c(i) Mod 10
+    Next i
+    '減算						'ウ
+    For i = 1 To saidai
+      If b(i) < one(i) Then
+        b(i) = b(i) + 10
+        b(i + 1) = b(i + 1) - 1
+      End If
+      b(i) = b(i) - one(i)
+    Next i
+    sum = 0
+    For i = 1 To saidai
+      sum = sum + b(i)
+    Next i
+  Loop While sum > 0
+  For i = 1 To saidai
+    Cells(3, i) = c(saidai + 1 - i)
+  Next i
+End Sub
+
+[72]
+Sub 多段桁で整数の除算をする()
+  Dim a(20) As Integer
+  Dim b(20) As Integer
+  Dim syo(20) As Integer
+  Dim one(20) As Integer
+  Dim keta As Integer
+  Dim i As Integer
+  Dim saidai As Integer
+  saidai = 10 ':最上位桁数
+  For i = 1 To saidai
+    a(saidai + 1 - i) = Cells(1, i)
+    b(saidai + 1 - i) = Cells(2, i)
+    syo(saidai + 1 - 1) = 0
+    one(saidai + 1 - 1) = 0
+  Next i
+  one(1) = 1				'ア
+  Do
+    '加算　商				'イ
+    keta = 0
+    For i = 1 To saidai
+      syo(i) = syo(i) + one(i) + keta
+      keta = syo(i) \ 10
+      syo(i) = syo(i) Mod 10
+    Next i
+    '減算 余り				'ウ
+    For i = 1 To saidai
+      If a(i) < b(i) Then
+        a(i) = a(i) + 10
+        a(i + 1) = a(i + 1) - 1
+      End If
+      a(i) = a(i) - b(i)
+    Next i
+  Loop While a(saidai) <> 9
+  '減算　商－１				'エ
+  For i = 1 To saidai
+    If syo(i) < one(i) Then
+      syo(i) = syo(i) + 10
+      syo(i + 1) = syo(i + 1) - 1
+    End If
+    syo(i) = syo(i) - one(i)
+  Next i
+  '加算　余り引きすぎ			'オ
+  keta = 0
+  For i = 1 To saidai
+    a(i) = a(i) + b(i) + keta
+    keta = a(i) \ 10
+    a(i) = a(i) Mod 10
+  Next i
+  '出力
+  For i = 1 To saidai
+    Cells(3, i) = syo(saidai + 1 - i)
+  Next i
+  For i = 1 To saidai
+    Cells(4, i) = a(saidai + 1 - i)
+  Next i
+End Sub
+
+[73]
+Sub 多段桁で実数の加算をする()
+  Dim a(20) As Integer
+  Dim b(20) As Integer
+  Dim c(20) As Integer
+  Dim a_jyou As Integer
+  Dim b_jyou As Integer
+  Dim c_jyou As Integer
+  Dim sa_jyou As Integer
+  Dim keta As Integer
+  Dim i As Integer
+  Dim saidai As Integer
+  saidai = 10 ':最上位桁数
+  For i = 1 To saidai  '入力
+    a(saidai + 1 - i) = Cells(1, i)
+    b(saidai + 1 - i) = Cells(2, i)
+    c(saidai + 1 - i) = 0
+  Next i
+  a_jyou = Cells(1, saidai + 2)
+  b_jyou = Cells(2, saidai + 2)
+  '桁ずらし
+  c_jyou = a_jyou
+  sa_jyou = a_jyou - b_jyou				'ア
+  Cells(5, 1) = sa_jyou
+  For i = 1 To saidai - sa_jyou				'イ
+     b(i) = b(i + sa_jyou)
+  Next i
+  For i = saidai - sa_jyou + 1 To saidai
+    b(i) = 0
+  Next i
+  '加算							'ウ
+  keta = 0
+  For i = 1 To saidai
+    c(i) = a(i) + b(i) + keta
+    keta = c(i) \ 10
+    c(i) = c(i) Mod 10
+  Next i
+  '桁あふれ						'エ
+  If keta <> 0 Then
+    For i = 2 To saidai
+      c(i - 1) = c(i)
+    Next i
+    c(saidai) = keta
+    c_jyou = c_jyou + 1
+  End If
+  For i = 1 To saidai
+    Cells(3, i) = c(saidai + 1 - i)
+  Next i
+  Cells(3, saidai + 2) = c_jyou
+End Sub
+
+[74]
+Sub 多段桁で実数の減算をする()
+  Dim a(20) As Integer
+  Dim b(20) As Integer
+  Dim c(20) As Integer
+  Dim a_jyou As Integer
+  Dim b_jyou As Integer
+  Dim c_jyou As Integer
+  Dim sa_jyou As Integer
+  Dim keta As Integer
+  Dim i As Integer
+  Dim saidai As Integer
+  saidai = 10 ':最上位桁数
+  For i = 1 To saidai '入力
+    a(saidai + 1 - i) = Cells(1, i)
+    b(saidai + 1 - i) = Cells(2, i)
+    c(saidai + 1 - i) = 0
+  Next i
+  a_jyou = Cells(1, saidai + 2)
+  b_jyou = Cells(2, saidai + 2)
+  '桁ずらし
+  c_jyou = a_jyou
+  sa_jyou = a_jyou - b_jyou				'ア
+  Cells(5, 1) = sa_jyou
+  For i = 1 To saidai - sa_jyou				'イ
+     b(i) = b(i + sa_jyou)
+  Next i
+  For i = saidai - sa_jyou + 1 To saidai
+    b(i) = 0
+  Next i
+  '減算							'ウ
+  For i = 1 To saidai
+    If a(i) < b(i) Then
+      a(i) = a(i) + 10
+      a(i + 1) = a(i + 1) - 1
+    End If
+    c(i) = a(i) - b(i)
+  Next i
+  Do While c(saidai) = 0				'エ
+    For i = saidai To 2 Step -1
+      c(i) = c(i - 1)
+    Next i
+    c(1) = 0
+    c_jyou = c_jyou - 1
+  Loop
+  For i = 1 To saidai '出力
+    Cells(3, i) = c(saidai + 1 - i)
+  Next i
+  Cells(3, saidai + 2) = c_jyou
+End Sub
+
+[75]
+Sub 交換法でデータを昇順に並べる()
+  Dim mat(20) As Variant
+  Dim i As Integer
+  Dim j As Integer
+  Dim tmp As Variant
+  Dim n As Integer
+  'テータ入力
+  n = 1
+  Do While Cells(1, n) <> ""
+    mat(n) = Cells(1, n)
+    n = n + 1
+  Loop
+  n = n - 1
+  'ソート
+  For i = 1 To n - 1				'ア
+    For j = i + 1 To n				'イ
+      If mat(i) > mat(j) Then			'ウ
+        tmp = mat(i)
+        mat(i) = mat(j)
+        mat(j) = tmp
+      End If
+    Next j
+  Next i
+  '出力
+  For i = 1 To n
+    Cells(3, i) = mat(i)
+  Next i
+End Sub
+
+[76]
+Sub 選択法でデータを昇順に並べる()
+  Dim mat(20) As Variant
+  Dim i As Integer
+  Dim j As Integer
+  Dim n As Integer
+  Dim k As Integer
+  Dim min_iti As Integer
+  Dim tmp As Variant
+  '入力
+  n = 1
+  Do While Cells(1, n) <> ""		
+    mat(n) = Cells(1, n)			
+    n = n + 1
+  Loop
+  n = n - 1
+  'ソート
+  For i = 1 To n - 1				'ア
+    min_iti = I					'イ
+    min = mat(i)
+    For j = i + 1 To n				'ウ
+      If min > mat(j) Then			'エ
+        min = mat(j)
+        min_iti = j
+      End If
+    Next j
+    tmp = mat(min_iti)				'オ
+    mat(min_iti) = mat(i)
+    mat(i) = tmp
+ Next i
+  '出力
+  For i = 1 To n
+    Cells(3, i) = mat(i)
+  Next i
+End Sub
+
+[77]
+Sub 挿入法でデータを昇順に並べる()
+  Dim mat(20) As Variant
+  Dim i As Integer
+  Dim j As Integer
+  Dim tmp As Variant
+  Dim n As Integer
+  '入力
+  n = 1
+  Do While Cells(1, n) <> ""
+    mat(n) = Cells(1, n)
+    n = n + 1
+  Loop
+  n = n - 1
+  'ソート
+  For i = 2 To n				'ア
+    tmp = mat(i)
+    j = i
+    Do While j > 1 And mat(j - 1) > tmp		'イ
+      mat(j) = mat(j - 1)
+      j = j - 1
+    Loop
+    mat(j) = tmp
+  Next i
+  '出力
+  For i = 1 To n
+    Cells(3, i) = mat(i)
+  Next i
+End Sub
+
+[78]
+Sub シェルソートででーたを昇順に並べる()
+  Dim mat(20) As Variant
+  Dim i As Integer
+  Dim j As Integer
+  Dim tmp As Variant
+  Dim kan As Integer
+  Dim n As Integer
+  '入力
+  n = 1
+  Do While Cells(1, n) <> ""
+    mat(n) = Cells(1, n)
+    n = n + 1
+  Loop
+  n = n - 1
+  '間隔決定					'ア
+  tmp = 1
+  Do While tmp < n
+    kan = tmp
+    tmp = tmp * 3 + 1
+  Loop
+  'ソート
+  Do While kan > 0				'イ
+    For i = 1 To n - kan			'ウ
+      If mat(i) > mat(i + kan) Then		'エ
+        tmp = mat(i)
+        mat(i) = mat(i + kan)
+        mat(i + kan) = tmp
+      End If
+    Next i
+    kan = kan / 2				'オ
+  Loop
+  '出力
+  For i = 1 To n
+    Cells(3, i) = mat(i)
+  Next i
+End Sub
+
+[79]
+Sub クイックソートデータを昇順に並べる()
+  Dim mat(20) As Variant
+  Dim lstk(20) As Integer
+  Dim rstk(20) As Integer
+  Dim tmp As Variant
+  Dim n As Integer
+  Dim l As Integer
+  Dim r As Integer
+  Dim i As Integer
+  Dim j As Integer
+  Dim stp As Integer
+  '入力
+  n = 1
+  Do While Cells(1, n) <> ""
+    mat(n) = Cells(1, n)
+    n = n + 1
+  Loop
+  n = n - 1
+  'ソート
+  lstk(1) = 1
+  rstk(1) = n
+  stp = 2
+  Do						'ア
+    stp = stp - 1
+    r = rstk(stp)
+    l = lstk(stp)
+    Do						'イ
+      cnt = mat((l + r) \ 2)
+      i = l
+      j = r
+      Do					'ウ
+        Do While mat(i) < cnt			'エ
+          i = i + 1
+        Loop
+        Do While mat(j) > cnt			'オ
+          j = j - 1
+        Loop
+        If i > j Then Exit Do			'カ
+        tmp = mat(i)
+        mat(i) = mat(j)
+        mat(j) = tmp
+        i = i + 1
+        j = j - 1
+      Loop While i < j
+      If l < j Then
+        lstk(stp) = l
+        rstk(stp) = j
+        stp = stp + 1
+      End If
+      l = i
+    Loop While l < r
+  Loop While stp > 0
+  '出力
+  For i = 1 To n
+    Cells(3, i) = mat(i)
+  Next i
+End Sub
+
+[80]
+Sub二重ソートでデータを並べる()
+  Dim mat(2, 20) As Variant
+  Dim tmp As Variant
+  Dim i As Integer
+  Dim j As Integer
+  Dim kara As Integer
+  Dim made As Integer
+  Dim n As Integer
+  For i = 1 To 2  '入力
+    n = 1
+    Do While Cells(, n)
+      mat(i, n) = Cells(i, n)
+      n = n + 1
+    Loop
+    n = n - 1
+  Next i
+  For i = 1 To n - 1				'ア
+    For j = i + 1 To n
+      If mat(1, i) > mat(1, j) Then
+        For k = 1 To 2                 
+          tmp = mat(k, i)
+          mat(k, i) = mat(k, j)
+          mat(k, j) = tmp
+        Next k
+      End If
+    Next j
+  Next i
+  tmp = mat(1, 1)
+  kara = 1
+  made = 1
+  Do While made < n				'イ
+    Do
+      made = made + 1
+    Loop While tmp = mat(1, made)
+    made = made - 1
+    For i = kara To made - 1			'ウ
+      For j = i + 1 To made
+        If mat(2, i) > mat(2, j) Then
+          For k = 1 To 2
+            tmp = mat(k, i)
+            mat(k, i) = mat(k, j)
+            mat(k, j) = tmp
+          Next k
+        End If
+      Next j
+    Next i
+    kara = made + 1
+    tmp = mat(1, kara)
+  Loop
+  For i = 1 To n  '出力
+   For j = 1 To 2
+     Cells(j + 3, i) = mat(j, i)
+   Next j
+  Next i
+End Sub
+
+[81]
+Sub すべての組み合わせを作る()
+  Dim i As Integer
+  Dim j As Integer
+  Dim iti As Integer
+  i = 1
+  j = 1
+  k = 1
+  Do While Cells(i, 1) <> ""				'ア
+    Do While Cells(j, 2) <> ""				'イ
+      Cells(k, 3) = Cells(i, 1) & Cells(j, 2)
+      k = k + 1
+      j = j + 1
+    Loop
+    j = 1
+    i = i + 1
+  Loop
+End Sub
+
+[82]
+Sub 順列を生成する1()
+  Const n = 3
+  Dim a(10) As Integer
+  Dim i As Integer
+  Dim j As Integer
+  Dim kazu As Long
+  Dim chk As Integer
+  Dim tmp As Long
+  Dim iti As Integer
+  iti = 1
+  For kazu = 0 To n ^ n - 1			'ア
+    tmp = kazu					'イ
+    For i = 0 To n - 1
+      a(i) = tmp Mod n
+      tmp = tmp \ n
+    Next i
+    chk = 0					
+    For i = 0 To n - 2				'ウ
+      For j = i + 1 To n - 1
+        If a(i) = a(j) Then chk = 1
+      Next j
+    Next i
+    If chk = 0 Then				'エ
+      For i = 0 To n - 1
+        Cells(iti, i + 1) = a(i)
+      Next i
+      iti = iti + 1
+    End If
+  Next kazu
+End Sub
+
+[83]
+Sub 順列を生成する2()
+  Const n = 3
+  Dim a(10) As Integer
+  Dim i As Integer
+  Dim j As Integer
+  Dim tmp As Integer
+  Dim min As Integer
+  Dim min_iti As Integer
+  Dim iti As Integer
+  For i = 1 To n
+    a(i) = i
+  Next i
+  a(0) = 0
+  a(n + 1) = 0
+  iti = 1
+  Do
+    '書き出し					'ア
+    For i = 1 To n
+      Cells(iti, i) = a(i)
+    Next i
+    iti = iti + 1
+    '手順1					'イ
+    i = n
+    Do
+      If a(i) < a(i + 1) Then Exit Do
+      i = i - 1
+    Loop While i >= 0
+    If i = 0 Then Exit Do
+    '手順2					'ウ
+    min = 100
+    For j = i To n
+      If a(i) < a(j) Then
+        If min > a(j) Then
+          min = a(j)
+          min_iti = j
+        End If
+      End If
+    Next j
+    '手順3					'エ
+    tmp = a(i)
+    a(i) = a(min_iti)
+    a(min_iti) = tmp
+    '手順4					'オ
+    i = i + 1
+    j = n
+    Do While i < j
+      tmp = a(i)
+      a(i) = a(j)
+      a(j) = tmp
+      i = i + 1
+      j = j - 1
+    Loop
+  Loop
+End Sub
+
+[84]
+Sub 順列を生成する3()
+  Const n = 4
+  Const r = 2
+  Dim a(10) As Integer
+  Dim mae(10) As Integer
+  Dim i As Integer
+  Dim j As Integer
+  Dim kazu As Long
+  Dim chk As Integer
+  Dim tmp As Long
+  Dim iti As Integer
+  iti = 1
+  For i = 0 To 10
+    mae(i) = -1
+  Next i
+  For kazu = 0 To n ^ n - 1			'ア
+    tmp = kazu
+    For i = 0 To n - 1
+      a(i) = tmp Mod n
+      tmp = tmp \ n
+    Next i
+    chk = 0				
+    For i = 0 To n - 2
+      For j = i + 1 To n - 1
+        If a(i) = a(j) Then chk = 1
+      Next j
+    Next i
+    If chk = 0 Then
+      For i = n - r To n - 1			'イ
+        If mae(i) = a(i) Then chk = chk + 1
+        mae(i) = a(i)
+      Next i
+      If chk < r Then
+        For i = 1 To r
+          Cells(iti, i) = a(n - r + i - 1)
+        Next i
+         iti = iti + 1
+      End If
+    End If
+  Next kazu
+End Sub
+
+[85]
+Sub 引き算パズルを解く()
+  Const n = 9
+  Dim a(10) As Integer
+  Dim i As Integer
+  Dim j As Integer
+  Dim kazu As Long
+  Dim chk As Integer
+  Dim tmp As Long
+  Dim hiku As Integer
+  Dim hikare As Integer
+  Dim kotae As Integer
+  Dim iti As Integer
+  iti = 1
+  For kazu = 0 To n ^ n - 1				'ア
+    tmp = kazu
+    For i = 0 To n - 1
+      a(i) = tmp Mod n
+      tmp = tmp \ n
+    Next i
+    chk = 0
+    For i = 0 To n - 2
+      For j = i + 1 To n - 1
+        If a(i) = a(j) Then chk = 1
+      Next j
+    Next i
+    If chk = 0 Then
+      For i = 0 To 8
+        a(i) = a(i) + 1
+      Next i
+      hikare = a(0) * 100 + a(1) * 10 + a(2)		'イ
+      hiku = a(3) * 100 + a(4) * 10 + a(5)
+      kotae = a(6) * 100 + a(7) * 10 + a(8)
+      If hikare - hiku = kotae Then			'ウ
+        For i = 0 To 2
+          Cells(iti, i + 1) = a(i)
+          Cells(iti, i + 5) = a(i + 3)
+          Cells(iti, i + 9) = a(i + 6)
+        Next i
+        Cells(iti, 4) = "-"
+        Cells(iti, 8) = "="
+        iti = iti + 1
+      End If
+    End If
+  Next kazu
+End Sub
+
+[86]
+Sub エイトクイーンを解く()
+  Const n = 8
+  Dim a(10) As Integer
+  Dim mat(10, 10) As Integer
+  Dim i As Integer
+  Dim j As Integer
+  Dim kazu As Long
+  Dim chk As Integer
+  Dim okeru As Integer
+  Dim tmp As Long
+  Dim x As Integer
+  Dim y As Integer
+  Dim iti As Integer
+  For kazu = 0 To n ^ n - 1
+    tmp = kazu
+    For i = 0 To n - 1
+      a(i) = tmp Mod n
+      tmp = tmp \ n
+    Next i
+    chk = 0
+    For i = 0 To n - 2
+      For j = i + 1 To n - 1
+        If a(i) = a(j) Then chk = 1
+      Next j
+    Next i
+    If chk = 0 Then         '重複ない
+      For y = 0 To n - 1      '盤初期化
+        For x = 0 To n - 1
+          mat(x, y) = 0
+        Next x
+      Next y
+      For i = 0 To n - 1      '駒置く				'ア
+        mat(i, a(i)) = 1
+      Next i
+      okeru = 0
+      For i = 0 To n - 1       '				'イ
+        x = i + 1
+        y = a(i) - 1
+        Do While x <= n - 1 And y >= 0
+          okeru = okeru + mat(x, y)
+          x = x + 1
+          y = y - 1
+        Loop
+      Next i
+      For i = 0 To n - 1       '				'ウ
+        x = i + 1
+        y = a(i) + 1
+        Do While x <= n - 1 And y <= n - 1
+          okeru = okeru + mat(x, y)
+          x = x + 1
+          y = y + 1
+        Loop
+      Next i
+      If okeru = 0 Then           '出力				'エ
+        For i = 0 To n - 1
+          For j = 0 To n - 1
+            If mat(j, i) = 1 Then
+              Cells(j + 1, i + 1) = "Q"
+            Else
+              Cells(j + 1, i + 1) = " "
+            End If
+          Next j
+        Next i
+        Application.wait (Now() + TimeValue("00:00:01"))
+      End If
+    End If
+  Next kazu
+End Sub
+
+[87]
+Sub 組み合わせを生成する()
+  Const n = 4
+  Const r = 2
+  Dim a(10) As Integer
+  Dim i As Integer
+  Dim kazu As Integer
+  Dim kosuu As Integer
+  Dim tmp As Integer
+  Dim iti_x As Integer
+  Dim iti_y As Integer
+  iti_y = 1
+  For kazu = 0 To 2 ^ n - 1				'ア
+    tmp = kazu
+    For i = 0 To n - 1					'イ
+      a(i) = tmp Mod 2
+      tmp = tmp \ 2
+    Next i
+    kosuu = 0
+    For i = 0 To n - 1					'ウ
+      kosuu = kosuu + a(i)
+    Next i
+    If chk = r Then					'エ
+      iti_x = 1
+      For i = 0 To n - 1
+        If a(i) = 1 Then
+          Cells(iti_y, iti_x) = i
+          iti_x = iti_x + 1
+        End If
+      Next i
+      iti_y = iti_y + 1
+    End If
+  Next kazu
+End Sub
+
+[88]
+Sub ナップザック問題を解く()
+  Const n = 4
+  Const TEIRYOU = 16
+  Dim a(10) As Integer
+  Dim kotae(10) As Integer
+  Dim wait As Variant
+  Dim kei As Integer
+  Dim saidai As Integer
+  Dim i As Integer
+  Dim kazu As Integer
+  Dim tmp As Integer
+  Dim iti As Integer
+  wait = Array(8, 7, 6, 4)
+  saidai = 0
+  For kazu = 0 To 2 ^ n - 1			'ア
+    tmp = kazu
+    For i = 0 To n - 1
+      a(i) = tmp Mod 2
+      tmp = tmp \ 2
+    Next i
+    kei = 0
+    For i = 0 To n - 1
+      kei = kei + wait(i) * a(i)		'イ
+    Next i
+    If saidai < kei Then			'ウ
+      If kei < TEIRYOU Then			'エ
+        saidai = kei
+        For i = 0 To n
+          kotae(i) = a(i)
+        Next i
+      End If
+    End If
+  Next kazu
+  iti = 1
+  For i = 0 To n - 1
+    If kotae(i) = 1 Then
+      Cells(1, iti) = wait(i)
+      iti = iti + 1
+    End If
+  Next i
+End Sub
+
+[89]
+Sub データを抽出する()
+  Dim iti1 As Integer
+  Dim iti2 As Integer
+  Dim iti3 As Integer
+  iti1 = 1
+  iti2 = 1
+  iti3 = 1
+  Do While Cells(1, iti1) <> ""			'ア
+    If Cells(1, iti1) < 50 Then			'イ
+      Cells(3, iti2) = Cells(1, iti1)
+      iti2 = iti2 + 1
+    Else
+      Cells(4, iti3) = Cells(1, iti1)
+      iti3 = iti3 + 1
+    End If
+    iti1 = iti1 + 1
+  Loop
+End Sub
+
+[90]
+Sub レコードを併合する1()
+  Dim iti1 As Integer
+  Dim tit2 As Integer
+  Dim iti3 As Integer
+  Dim tmp1 As Variant
+  Dim tmp2 As Variant
+  iti1 = 1
+  iti2 = 1
+  iti3 = 1
+  If Cells(1, iti1) <> "" Then
+    tmp1 = Cells(1, iti1)
+    iti1 = iti1 + 1
+  Else
+    tmp1 = 9999
+  End If
+  If Cells(2, iti2) <> "" Then
+    tmp2 = Cells(2, iti2)
+    iti2 = iti2 + 1
+  Else
+    tmp2 = 9999
+  End If
+  Do While tmp1 <> 9999 Or tmp2 <> 9999			'ア
+    If tmp1 < tmp2 Then					'イ
+      Cells(4, iti3) = tmp1
+      iti3 = iti3 + 1
+      If Cells(1, iti1) <> "" Then			'ウ
+        tmp1 = Cells(1, iti1)
+        iti1 = iti1 + 1
+      Else
+        tmp1 = 9999
+      End If
+    Else
+      Cells(4, iti3) = tmp2
+      iti3 = iti3 + 1
+      If Cells(2, iti2) <> "" Then			'エ
+        tmp2 = Cells(2, iti2)
+        iti2 = iti2 + 1
+      Else
+        tmp2 = 9999
+      End If
+    End If
+  Loop
+End Sub
+
+[91]
+Sub レコードを併合する2()
+  Dim iti1 As Integer
+  Dim tit2 As Integer
+  Dim iti3 As Integer
+  Dim tmp1 As Variant
+  Dim tmp2 As Variant
+  Dim mae As Variant
+  iti1 = 1
+  iti2 = 1
+  iti3 = 1
+  mae = -1
+  If Cells(1, iti1) <> "" Then
+    tmp1 = Cells(1, iti1)
+  Else
+    tmp1 = 9999
+  End If
+  If Cells(2, iti2) <> "" Then
+    tmp2 = Cells(2, iti2)
+  Else
+    tmp2 = 9999
+  End If
+  Do While tmp1 <> 9999 Or tmp2 <> 9999			'ア
+    If tmp1 < tmp2 Then
+      Cells(4, iti3) = tmp1
+      iti3 = iti3 + 1
+      mae = tmp1
+    Else
+      Cells(4, iti3) = tmp2
+      iti3 = iti3 + 1
+      mae = tmp2
+    End If
+    Do While Cells(1, iti1) = mae			'イ
+      iti1 = iti1 + 1
+    Loop
+    Do While Cells(2, iti2) = mae			'ウ
+      iti2 = iti2 + 1
+    Loop
+    If Cells(1, iti1) <> "" Then
+      tmp1 = Cells(1, iti1)
+    Else
+      tmp1 = 9999
+    End If
+    If Cells(2, iti2) <> "" Then
+      tmp2 = Cells(2, iti2)
+    Else
+      tmp2 = 9999
+    End If
+  Loop
+End Sub
+
+[92]
+Sub 項目を削除する()
+  Dim iti1 As Integer
+  Dim iti2 As Integer
+  Dim iti3 As Integer
+  Dim moto As Variant
+  Dim kesu As Variant
+  iti1 = 1
+  iti2 = 1
+  iti3 = 1
+  If Cells(1, iti1) <> "" Then
+    moto = Cells(1, iti1)
+    iti1 = iti1 + 1
+  Else
+    moto = 9999
+  End If
+  If Cells(2, iti2) <> "" Then
+    kesu = Cells(2, iti2)
+    iti2 = iti2 + 1
+  Else
+    kesu = 9999
+  End If
+  Do While moto <> 9999				'ア
+    If moto > kesu Then				'イ
+      If Cells(2, iti2) <> "" Then
+        kesu = Cells(2, iti2)
+        iti2 = iti2 + 1
+      Else
+        kesu = 9999
+      End If
+    Else
+      If moto < kesu Then			'ウ
+        Cells(4, iti3) = moto
+        iti3 = iti3 + 1
+      End If
+      If Cells(1, iti1) <> "" Then
+        moto = Cells(1, iti1)
+        iti1 = iti1 + 1
+      Else
+        moto = 9999
+      End If
+    End If
+  Loop
+End Sub
+
+[93]
+Sub 項目の差分を抽出する()
+  Dim iti1 As Integer
+  Dim tit2 As Integer
+  Dim iti3 As Integer
+  Dim iti4 As Integer
+  Dim tmp1 As Variant
+  Dim tmp2 As Variant
+  Dim mae As Variant
+  iti1 = 1
+  iti2 = 1
+  iti3 = 1
+  iti4 = 1
+  mae = -1
+  If Cells(1, iti1) <> "" Then
+    tmp1 = Cells(1, iti1)
+  Else
+    tmp1 = 9999
+  End If
+  If Cells(2, iti2) <> "" Then
+    tmp2 = Cells(2, iti2)
+  Else
+    tmp2 = 9999
+  End If
+  Do While tmp1 <> 9999 Or tmp2 <> 9999		'ア
+    '両方同じ
+    If tmp1 = tmp2 Then				'イ
+      mae = tmp1
+      Do
+        iti1 = iti1 + 1
+        If Cells(1, iti1) <> "" Then
+          tmp1 = Cells(1, iti1)
+        Else
+          tmp1 = 9999
+        End If
+      Loop While tmp1 = mae
+      Do
+        iti2 = iti2 + 1
+        If Cells(2, iti1) <> "" Then
+          tmp2 = Cells(2, iti2)
+        Else
+          tmp2 = 9999
+        End If
+      Loop While tmp2 = mae
+    Else
+    '１が余分					'ウ
+      If tmp1 < tmp2 Then
+        Cells(4, iti3) = tmp1
+        iti3 = iti3 + 1
+        mae = tmp1
+        Do
+          iti1 = iti1 + 1
+          If Cells(1, iti1) <> "" Then
+            tmp1 = Cells(1, iti1)
+          Else
+            tmp1 = 9999
+          End If
+        Loop While tmp1 = mae
+      Else
+    '２が余分
+        Cells(5, iti4) = tmp2
+        iti4 = iti4 + 1
+        mae = tmp2
+        Do
+          iti2 = iti2 + 1
+          If Cells(2, iti2) <> "" Then
+            tmp2 = Cells(2, iti2)
+          Else
+            tmp2 = 9999
+          End If
+        Loop While tmp2 = mae
+      End If
+    End If
+  Loop
+End Sub
+
+[94]
+Sub 項目を変更する()
+  Dim iti1 As Integer
+  Dim tit2 As Integer
+  Dim tmp1 As Variant
+  Dim tmp2 As Variant
+  iti1 = 2
+  iti2 = 2
+  If Cells(iti1, 1) <> "" Then
+    tmp1 = Cells(iti1, 1)
+  Else
+    tmp1 = 9999
+  End If
+  If Cells(iti2, 4) <> "" Then
+    tmp2 = Cells(iti2, 4)
+  Else
+    tmp2 = 9999
+  End If
+  Do While tmp1 <> 9999				'ア
+    Do While tmp1 > tmp2
+      iti2 = iti2 + 1
+      If Cells(iti2, 4) <> "" Then
+        tmp2 = Cells(iti2, 4)
+      Else
+        tmp2 = 9999
+      End If
+    Loop
+    Cells(iti1, 7) = Cells(iti1, 1)		'イ
+    Cells(iti1, 8) = Cells(iti1, 2)
+    If tmp1 = tmp2 Then				'ウ
+      Cells(iti1, 7) = Cells(iti2, 4)
+      Cells(iti1, 8) = Cells(iti2, 5)
+    End If
+    iti1 = iti1 + 1
+    If Cells(iti1, 1) <> "" Then
+      tmp1 = Cells(iti1, 1)
+    Else
+      tmp1 = 9999
+    End If
+  Loop
+End Sub
+
+[95]
+Sub 線形合同法で乱数を作る()
+  Dim a As Long
+  Dim b As Long
+  Dim c As Long
+  Dim iti As Integer
+  Dim i As Integer
+  Dim x As Long
+  iti = 1
+  a = 853					'ア
+  b = 543
+  c = 8192 
+x = 3			
+  For i = 1 To 100
+    x = (x * a + b) Mod c			'イ
+    Cells(iti, 1) = x / c
+    iti = iti + 1
+  Next i
+End Sub
+
+[96]
+Sub 線形フィードバックシフトレジスタで乱数を作る()
+  Dim reg As Integer
+  Dim key As Integer
+  Dim hai As Integer
+  Dim tmp As Integer
+  Dim i As Integer
+  reg = &H13A3
+  key = &H2015
+  iti = 1
+  For i = 1 To 100
+    tmp = reg And key				'ア
+    hai = tmp Mod 2
+    tmp = tmp \ 2
+    Do While tmp <> 0
+      hai = hai Xor (tmp Mod 2)			'イ
+      tmp = tmp \ 2
+    Loop
+    reg = reg * 2 + hai				'ウ
+    reg = reg And &H3FFF
+    Cells(i, 1) = reg
+  Next i
+End Sub
+
+[97]
+Sub 乱数でサイコロの目を作る()
+  Dim a As Long
+  Dim b As Long
+  Dim c As Long
+  Dim iti As Integer
+  Dim i As Integer
+  Dim x As Long
+  Dim xf As Single
+  x = 3
+  iti = 1
+  a = 853
+  b = 543
+  c = 8192
+  For i = 1 To 100
+    x = (x * a + b) Mod c
+    xf = x / c
+    Cells(iti, 1) = Int(xf * 6) + 1			'ア
+    iti = iti + 1
+  Next i
+End Sub
+
+[98]
+Sub カードをシャッフルする()
+  Dim a As Long
+  Dim b As Long
+  Dim c As Long
+  Dim iti As Integer
+  Dim tmp As Integer
+  Dim i As Integer
+  Dim x As Long
+  Dim xf As Single
+  x = 3
+  iti = 1
+  a = 853
+  b = 543
+  c = 8192
+  For i = 1 To 200
+    x = (x * a + b) Mod c
+    xf = x / c
+    iti = Int(xf * 20 + 1)			'ア
+    tmp = Cells(1, 1)				'イ
+    Cells(1, 1) = Cells(1, iti)
+    Cells(1, iti) = tmp
+  Next i
+End Sub
+
+[99]
+Sub カードゲームをシミュレートする()
+  Dim a As Long
+  Dim b As Long
+  Dim c As Long
+  Dim i As Integer
+  Dim x As Long
+  Dim xf As Single
+  Dim j As Integer
+  Dim iti As Integer
+  Dim mat(10) As Integer
+  Dim saki As Integer
+  Dim ato As Integer
+  Dim tmp As Integer
+  Const kai = 30000
+  x = 3
+  a = 853
+  b = 543
+  c = 8192
+  For i = 0 To 9				'ア
+    mat(i) = i
+  Next i
+  saki = 0
+  ato = 0
+  For i = 1 To kai
+    For j = 1 To 20				'イ
+      x = (x * a + b) Mod c
+      xf = x / c
+      iti = Int(xf * 10)
+      tmp = mat(iti)
+      mat(iti) = mat(0)
+      mat(0) = tmp
+    Next j
+    j = 0
+    Do While mat(j) <> 0			'ウ
+      j = j + 1
+    Loop
+    If j Mod 2 = 0 Then
+      saki = saki + 1
+    Else
+      ato = ato + 1
+    End If
+  Next i
+  Range("A1") = saki / kai
+  Range("A2") = ato / kai
+End Sub
+
+[100]
+Sub モンテカルロ法で円周率を求める()
+  Dim a As Long
+  Dim b As Long
+  Dim c As Long
+  Dim iti As Integer
+  Dim i As Integer
+  Dim x As Long
+  Dim xf As Single
+  Dim yf As Single
+  Dim wa As Long
+  Dim n As Integer
+  n = 10000
+  x = 297
+  iti = 1
+  a = 853
+  b = 543
+  c = 8192
+  For i = 1 To n
+    x = (x * a + b) Mod c				'ア
+    xf = x / c
+    x = (x * a + b) Mod c
+    yf = x / c
+    If xf * xf + yf * yf <= 1 Then			'イ
+      wa = wa + 1
+    End If
+  Next i
+  Cells(1, 1) = wa * 4 / n				'ウ
+End Sub
+
+[101]
+Sub ピュフォンの針で円周率を求める()
+  Dim a As Long
+  Dim b As Long
+  Dim c As Long
+  Dim wa As Integer
+  Dim i As Integer
+  Dim x As Long
+  Dim xf As Single
+  Dim yf As Single
+  Const n = 30000
+  x = 3
+  a = 853
+  b = 543
+  c = 8192
+  wa = 0
+  For i = 1 To n
+    x = (x * a + b) Mod c
+    xf = x / c
+    x = (x * a + b) Mod c
+    yf = x / c
+    If xf <= Sin(yf * 3.14159 / 2) Then wa = wa + 1	'ア
+  Next i
+  Range("A1") = 2 / (wa / n)				'イ
+End Sub
+
+[102]
+Sub ポアソン乱数を作る()
+  Dim a As Long
+  Dim b As Long
+  Dim c As Long
+  Dim x As Long
+  Dim se As Single
+  Dim ka As Integer
+  Dim iti As Integer
+  Dim i As Integer
+  Dim xf As Single
+  a = 853
+  b = 543
+  c = 8192
+  x = 297
+  For i = 1 To 1000
+    se = 1
+    ko = -1
+    Do While se > Exp(-3)				'ア
+      x = (x * a + b) Mod c
+      xf = x / c
+      se = se * xf
+      ko = ko + 1
+    Loop
+    Cells(i, 1) = ko
+  Next i
+End Sub
+
+[103]
+Sub 待ち行列をシミュレートする()
+  Dim a As Long
+  Dim b As Long
+  Dim c As Long
+  Dim x As Long
+  Dim se As Single
+  Dim ka As Integer
+  Dim iti As Integer
+  Dim tm As Integer
+  Dim nin As Integer
+  Dim xf As Single
+  a = 853
+  b = 543
+  c = 8192
+  x = 301
+  nin = 0
+  For tm = 1 To 180
+    se = 1
+    ko = -1
+    Do While se > Exp(-1)				'ア
+      x = (x * a + b) Mod c
+      xf = x / c
+      se = se * xf
+      ko = ko + 1
+    Loop
+    nin = nin + ko					'イ
+    Cells(tm, 1) = nin
+    If nin >= 1 Then nin = nin - 1
+  Next tm
+End Sub
+
+[104]
+Sub ジヤンケンの勝率を求める()
+  Dim kakuritu(3, 3) As Single
+  Dim te_a As Integer
+  Dim te_b As Integer
+  Dim i As Integer
+  Dim j As Integer
+  Dim kachi As Integer
+  Dim x As Long
+  Dim a As Long
+  Dim b As Long
+  Dim c As Long
+  Dim xf As Single
+  For i = 1 To 3
+    For j = 1 To 3
+      kakuritu(i, j) = Cells(j, i)
+    Next j
+  Next i
+  x = 3
+  a = 853
+  b = 543
+  c = 8192
+  te_a = 1
+  te_b = 1
+  kachi = 0
+  For i = 1 To 1000
+    x = (x * a + b) Mod c
+    xf = x / c
+    If kakuritu(te_a, 1) > xf Then
+      te_a = 1
+    Else
+      If (kakuritu(te_a, 1) + kakuritu(te_a, 2)) > xf Then	'ア
+        te_a = 2
+      Else
+        te_a = 3
+      End If
+    End If
+    If te_a = 1 And te_b = 3 Then kachi = kachi + 1		'イ
+    If te_a = 2 And te_b = 1 Then kachi = kachi + 1
+    If te_a = 3 And te_b = 2 Then kachi = kachi + 1
+  Next i
+  Range("A5") = kachi / 1000
+End Sub
+
+[105]
+Sub シーザー暗号により暗号化する()
+  Dim mozi As String
+  Dim hira As Variant
+  Dim code As Variant
+  Dim i As Integer
+  Dim iti As Integer
+  hira = Array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
+  code = Array("D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C")
+  iti = 1
+  Do
+    mozi = Cells(1, iti)				'ア
+    i = -1
+    Do
+      i = i + 1
+    Loop While mozi <> hira(i)
+    Cells(2, iti) = code(i)				'イ
+    iti = iti + 1
+  Loop While Cells(1, iti) <> ""
+End Sub
+
+[106]
+Sub シーザー暗号を復号化する()
+  Dim mozi As String
+  Dim hira As Variant
+  Dim code As Variant
+  Dim i As Integer
+  Dim iti As Integer
+  hira = Array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
+  code = Array("D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C")
+  iti = 1
+  Do
+    mozi = Cells(1, iti)				'ア
+    i = -1
+    Do
+      i = i + 1
+    Loop While mozi <> code(i)		
+    Cells(2, iti) = hira(i)				'イ
+    iti = iti + 1
+  Loop While Cells(1, iti) <> ""
+End Sub
+
+[107]
+Sub ストリーム暗号で暗号化する()
+  Dim mozi As String
+  Dim hira As Variant
+  Dim code As Variant
+  Dim i As Integer
+  Dim iti As Integer
+  hira = Array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
+  Dim a As Long
+  Dim b As Long
+  Dim c As Long
+  Dim x As Long
+  x = 3
+  a = 853
+  b = 543
+  c = 8192
+  iti = 1
+  Do
+    mozi = Cells(1, iti)				'ア
+    x = (x * a + b) Mod c
+    i = -1
+    Do							'イ
+      i = i + 1
+    Loop While mozi <> hira(i)
+    i = i + Int(x / c * 10)				'ウ
+    If 26 <= i Then i = i - 26
+    Cells(2, iti) = hira(i)
+    iti = iti + 1
+  Loop While Cells(1, iti) <> ""
+End Sub
+
+[108]
+Sub ストリーム復号で復号化する()
+  Dim mozi As String
+  Dim hira As Variant
+  Dim code As Variant
+  Dim i As Integer
+  Dim iti As Integer
+  Dim a As Long
+  Dim b As Long
+  Dim c As Long
+  Dim x As Long
+  hira = Array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
+  x = 3
+  a = 853
+  b = 543
+  c = 8192
+  iti = 1
+  Do
+    mozi = Cells(1, iti)			'ア
+    x = (x * a + b) Mod c
+    i = -1
+    Do						'イ
+      i = i + 1
+    Loop While mozi <> hira(i)
+    i = i - Int(x / c * 10)
+    If i < 0 Then i = i + 26			'ウ
+    Cells(2, iti) = hira(i)
+    iti = iti + 1
+  Loop While Cells(1, iti) <> ""
+End Sub
+
+[109]
+Sub RSA暗号復号で暗号化復号化する()
+  Dim n As Long
+  Dim k As Long
+  Dim a As Long
+  Dim i As Integer
+  Dim amari As Integer
+  n = Range("A1")
+  k = Range("A2")
+  a = Range("A3")
+  amari = 1
+  Do While k > 0
+    amari = (amari * a) Mod n			'ア
+    k = k - 1
+  Loop
+  Range("A4") = amari
+End Sub
+
+[110]
+Sub RSA暗号の鍵を生成する()
+  Dim prime As Variant
+  Dim ee(100) As Long
+  Dim max_prime As Integer
+  Dim a As Long
+  Dim b As Long
+  Dim c As Long
+  Dim e  As Long
+  Dim d As Long
+  Dim n As Long
+  Dim l As Long
+  Dim p As Long
+  Dim q As Long
+  Dim t1 As Long
+  Dim t2 As Long
+  Dim t3 As Long
+  Dim x1 As Long
+  Dim x2 As Long
+  Dim x As Long
+  Dim y1 As Long
+  Dim y2 As Long
+  Dim y As Long
+  Dim z1 As Long
+  Dim z2 As Long
+  Dim z As Long
+  Dim gcd As Long
+  Dim i As Integer
+  Dim j As Integer
+  x = 5
+  a = 853
+  b = 543
+  c = 8192
+  prime = Array(2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199)
+  max_prime = 45
+  '乱数でｐｑ決定					'ア
+  Do
+    x = (x * a + b) Mod c
+    p = prime(Int(x / c * max_prime))
+    x = (x * a + b) Mod c
+    q = prime(Int(x / c * max_prime))
+  Loop While p = q
+'p = 29
+'q = 13
+  Range("A1") = p
+  Range("A2") = q
+  n = p * q
+  Range("A3") = n
+  '最小公倍数						'イ
+  t1 = p - 1
+  t2 = q - 1
+  Do
+    t3 = t1 Mod t2
+    t1 = t2
+    t2 = t3
+  Loop While t3 <> 0
+  l = (p - 1) / t1 * (q - 1)
+  'Ｌに対し互いに素の素数を探す				'ウ
+  i = 0
+  j = 0
+  Do While i < max_prime
+    t1 = l
+    t2 = prime(i)
+    Do
+      t3 = t1 Mod t2
+      t1 = t2
+      t2 = t3
+    Loop While t3 <> 0
+    If t1 = 1 Then
+      ee(j) = prime(i)
+      j = j + 1
+    End If
+    i = i + 1
+  Loop
+  e = ee(1)
+  Range("A4") = e
+  '拡張ユークリッドでｄ探す				'エ
+  z1 = l
+  z2 = e
+  x1 = 1
+  y1 = 0
+  x2 = 0
+  y2 = 1
+  Do
+    t1 = z1 \ z2
+    x = x1 - t1 * x2
+    y = y1 - t1 * y2
+   z = z1 - t1 * z2
+    x1 = x2
+    y1 = y2
+    z1 = z2
+    x2 = x
+    y2 = y
+    z2 = z
+  Loop While z <> 0
+  d = y1
+  If d < 0 Then d = l - d
+  Range("A5") = d
+End Sub
+
+[111]
+Sub スタックに積む()
+  Dim stack As Variant
+  Dim pointer As Integer
+  Dim dt As Integer
+  Dim i As Integer
+  stack = Array(1, 2, 3, 4, 0, 0, 0, 0, 0, 0)
+  pointer = 3
+  dt = 5
+  pointer = pointer + 1				'ア
+  stack(pointer) = dt				'イ
+  For i = 0 To pointer
+    Cells(1, i + 1) = stack(i)
+  Next i
+End Sub
+
+[112]
+Sub スタックから下ろす()
+  Dim stack As Variant
+  Dim pointer As Integer
+  Dim i As Integer
+  stack = Array(1, 2, 3, 4, 5, 0, 0, 0, 0, 0)
+  pointer = 4
+  pointer = pointer - 1					'ア
+  For i = 0 To pointer
+    Cells(1, i + 1) = stack(i)
+  Next i
+End Sub
+
+[113]
+Sub 数の加減算パズルを解く()
+  Dim stack(2, 20) As Integer
+  Dim pointer As Integer
+  Dim i As Integer
+  Dim iti As Integer
+  Dim n As Integer
+  n = 5
+  iti = 1
+  'スタック初期化
+  For i = 1 To 10
+    stack(2, i) = 0
+  Next i
+  '初期値
+  stack(1, 1) = 1
+  stack(2, 1) = 1
+  pointer = 1
+  Do While 0 < pointer
+    pointer = pointer + 1                       '木を上がる
+    stack(2, pointer) = stack(2, pointer) + 1      '訪れた回数＋１
+    If stack(2, pointer - 1) <> 2 Then				'ア
+      stack(1, pointer) = stack(1, pointer - 1) - pointer  '引き算
+    Else
+      stack(1, pointer) = stack(1, pointer - 1) + pointer  '足し算
+    End If
+    If pointer = n Then                  'リーフに達した		'イ
+      If stack(1, pointer) = 5 Then        '解出力			'ウ
+        For i = 1 To n
+          Cells(iti, 2 * i - 1) = i
+          If stack(2, i) = 1 Then
+            Cells(iti, 2 * i) = "-"
+          Else
+            Cells(iti, 2 * i) = "+"
+          End If
+        Next i
+        Cells(iti, 2 * n) = "="
+        Cells(iti, 2 * n + 1) = stack(1, pointer)
+        iti = iti + 1
+      End If
+      '木を下りる
+      Do
+        stack(2, pointer) = 0       '消す予定のスタック後始末
+        pointer = pointer - 1       '消した
+      Loop While stack(2, pointer) = 2
+      stack(2, pointer) = stack(2, pointer) + 1  '下りたスタックの訪問回数＋１
+    End If
+  Loop
+End Sub
+
+[114]
+Sub ハノイの塔問題を解く()
+  Dim stack(2, 10) As Integer
+  Dim pointer(2) As Integer
+  Dim kara As Integer
+  Dim he As Integer
+  Dim n As Integer
+  Dim te As Integer
+  Dim i As Integer
+  Dim j As Integer
+  Dim min As Integer
+  Dim one As Integer
+  n = 4
+  For i = 1 To n                        'スタックに積む
+    stack(0, i) = n - i + 1
+  Next
+  pointer(0) = n
+  pointer(1) = 0
+  pointer(2) = 0
+  one = 0
+  Range("A1", "C10") = ""               '表示
+  For i = 0 To 2
+    For j = 1 To n
+        If pointer(i) >= j Then
+          Cells(n - j + 1, i + 1) = stack(i, j)
+        End If
+      Next j
+  Next i
+  Application.wait (Now() + TimeValue("00:00:01"))
+  For te = 1 To 2 ^ n - 1                   '開始
+    If te Mod 2 = 1 Then
+      pointer(one) = pointer(one) - 1       '最小板POP				'ア
+      one = (one + 1) Mod 3               '置くスタック計算
+      pointer(one) = pointer(one) + 1       '最小板PUSH
+      stack(one, pointer(one)) = 1
+    Else
+      min = 999
+      For i = 0 To 2                       '最小板以外の小さい板のスタック探す	'イ
+        If min > stack(i, pointer(i)) And stack(i, pointer(i)) > 1 Then
+          min = stack(i, pointer(i))
+          kara = i
+        End If
+      Next i
+      If min = 999 Then Exit For          'すへで移動していたら終了
+      pointer(kara) = pointer(kara) - 1     '最小板以外の小さい板POP		'ウ
+      For i = 0 To 2                       '置くスタック探す
+        If one <> i And kara <> i Then he = i
+      Next i
+      pointer(he) = pointer(he) + 1         '最小板以外の小さい板PUSH
+      stack(he, pointer(he)) = min
+    End If
+    Range("A1", "C10") = ""                         '表示
+    For i = 0 To 2
+      For j = 1 To n
+        If pointer(i) >= j Then
+          Cells(n - j + 1, i + 1) = stack(i, j)
+        End If
+      Next j
+    Next i
+    Application.wait (Now() + TimeValue("00:00:01"))
+  Next te
+End Sub
+
+[115]
+Sub 迷路を作る()
+  Dim mat(30, 30) As Integer
+  Dim stk(3, 100) As Integer
+  Dim n As Integer
+  Dim m As Integer
+  Dim sw As Integer
+  Dim i As Integer
+  Dim j As Integer
+  Dim sp As Integer
+  Dim root As Integer
+  n = 5
+  m = 4
+  n = n * 2 + 2
+  m = m * 2 + 2
+  For i = 1 To 30
+    For j = 1 To 30
+      mat(i, j) = 0
+    Next j
+  Next i
+  For i = 2 To n
+    For j = 2 To m
+      mat(i, j) = 8
+    Next j
+  Next i
+  sp = 1
+  stk(1, sp) = 3
+  stk(2, sp) = 3
+  mat(stk(1, sp), stk(1, sp)) = 0
+  Do
+    root = 0
+    root = root + mat(stk(1, sp) + 2, stk(2, sp))
+    root = root + mat(stk(1, sp) - 2, stk(2, sp))
+    root = root + mat(stk(1, sp), stk(2, sp) + 2)
+    root = root + mat(stk(1, sp), stk(2, sp) - 2)
+    If root <> 0 Then
+      sw = 0
+      Do While sw = 0
+        ran = Int(Rnd() * 4)					'ア
+        If ran = 0 And mat(stk(1, sp), stk(2, sp) - 2) = 8 Then
+          mat(stk(1, sp), stk(2, sp) - 1) = 0
+          mat(stk(1, sp), stk(2, sp) - 2) = 0
+          sp = sp + 1
+          stk(1, sp) = stk(1, sp - 1)
+          stk(2, sp) = stk(2, sp - 1) - 2
+          sw = 1
+        End If
+        If ran = 1 And mat(stk(1, sp) + 2, stk(2, sp)) = 8 Then
+          mat(stk(1, sp) + 1, stk(2, sp)) = 0
+          mat(stk(1, sp) + 2, stk(2, sp)) = 0
+          sp = sp + 1
+          stk(1, sp) = stk(1, sp - 1) + 2
+          stk(2, sp) = stk(2, sp - 1)
+          sw = 1
+        End If
+        If ran = 2 And mat(stk(1, sp), stk(2, sp) + 2) = 8 Then
+          mat(stk(1, sp), stk(2, sp) + 1) = 0
+          mat(stk(1, sp), stk(2, sp) + 2) = 0
+          sp = sp + 1
+          stk(1, sp) = stk(1, sp - 1)
+          stk(2, sp) = stk(2, sp - 1) + 2
+          sw = 1
+        End If
+        If ran = 3 And mat(stk(1, sp) - 2, stk(2, sp)) = 8 Then
+           mat(stk(1, sp) - 1, stk(2, sp)) = 0
+           mat(stk(1, sp) - 2, stk(2, sp)) = 0
+           sp = sp + 1
+           stk(1, sp) = stk(1, sp - 1) - 2
+           stk(2, sp) = stk(2, sp - 1)
+           sw = 1
+        End If
+      Loop
+    Else
+      sp = sp - 1
+    End If
+    '出力
+    For i = 1 To n + 1
+      For j = 1 To m + 1
+        Cells(j, i) = mat(i, j)
+      Next j
+    Next i
+  Loop While sp > 0
+  Cells(1, 1) = 1
+End Sub
+
+[116]
+Sub キューに入れる()
+  Dim que As Variant
+  Dim head As Integer
+  Dim tail As Integer
+  Dim i As Integer
+  Dim iti
+  que = Array(4, 5, 0, 0, 0, 0, 0, 1, 2, 3)
+  head = 7                                      '先頭
+  tail = 1                                      '末尾
+    tail = (tail + 1) Mod 10		'ア
+  que(tail) = 6                                 'データ追加
+    iti = 1
+  i = head
+  Cells(1, iti) = que(i)
+  Do
+    i = (i + 1) Mod 10
+    iti = iti + 1
+    Cells(1, iti) = que(i)
+  Loop While i <> tail
+End Sub
+
+[117]
+Sub キューから除く()
+  Dim que As Variant
+  Dim head As Integer
+  Dim tail As Integer
+  Dim i As Integer
+  Dim iti
+  que = Array(4, 5, 0, 0, 0, 0, 0, 1, 2, 3)
+  head = 7                                     '先頭
+  tail = 1                                      '末尾
+    head = (head + 1) Mod 10                    'データ削除　ア
+    iti = 1
+  i = head
+  Cells(1, iti) = que(i)
+  Do
+    i = (i + 1) Mod 10
+    iti = iti + 1
+    Cells(1, iti) = que(i)
+  Loop While i <> tail
+End Sub
+
+[118]
+Sub エイトパズルを解く()
+  Dim que(50, 20)
+  Dim quIn As Integer
+  Dim quOut As Integer
+  Dim mon As Variant
+  Dim ans As Variant
+  Dim tmp(20) As Integer
+  Dim idou As Variant
+  Dim kuu As Integer
+  Dim uni(110, 8) As Integer
+  Dim uni_max As Integer
+  Dim onazi As Integer
+  Dim i As Integer
+  Dim j As Integer
+  Dim k As Integer
+  mon = Array(0, 5, 2, 1, 4, 3, 7, 8, 6)
+  ans = Array(1, 2, 3, 4, 5, 6, 7, 8, 0)
+  idou = Array(Array(1, 3, -1), Array(0, 2, 4, -1), Array(1, 5, -1), _
+        Array(0, 4, 6, -1), Array(1, 3, 5, 7, -1), Array(2, 4, 8, -1), _
+        Array(3, 7, -1), Array(4, 6, 8, -1), Array(5, 7, -1))
+  For j = 0 To 50                   '履歴初期化
+    For i = 9 To 20
+      que(j, i) = 0
+    Next i
+  Next j
+  For i = 0 To 8                   'キューに問題入れる
+    que(0, i) = mon(i)
+  Next i
+  quIn = 0
+  quOut = 0
+  uni_max = 0
+  For i = 0 To 8                   'ユニークに問題入れる
+    uni(0, i) = mon(i)
+  Next i
+  Do While uni_max < 100
+    kuu = 0                      '空欄探し			'ア
+    Do While que(quOut, kuu) <> 0
+      kuu = kuu + 1
+    Loop
+    k = 0                        '動かしてみる
+    Do While idou(kuu)(k) <> -1					'イ
+      For i = 0 To 20
+        tmp(i) = que(quOut, i)
+      Next i
+      tmp(kuu) = tmp(idou(kuu)(k))    '駒入れ替え
+      tmp(idou(kuu)(k)) = 0
+      For j = 0 To uni_max
+        onazi = 0                     '前に出たか
+        For i = 0 To 8
+          If uni(j, i) = tmp(i) Then onazi = onazi + 1
+        Next i
+        If onazi = 9 Then Exit For
+      Next j
+      If onazi <> 9 Then              '前に出ていない		'ウ
+        uni_max = uni_max + 1
+        For i = 0 To 8                 'ユニークに追加
+          uni(uni_max, i) = tmp(i)
+        Next i
+        quIn = (quIn + 1) Mod 50
+        For i = 0 To 20                'キューに追加
+          que(quIn, i) = tmp(i)
+        Next i
+        i = 9                         '履歴記録
+        Do While que(quIn, i) <> 0    '履歴の最後を探す
+          i = i + 1
+        Loop
+        que(quIn, i) = idou(kuu)(k)
+    '    quIn = (quIn + 1) Mod 50
+      End If
+      onazi = 0
+      For i = 0 To 8
+        If tmp(i) = ans(i) Then onazi = onazi + 1
+      Next i
+      If onazi = 9 Then Exit Do       '解発見
+      k = k + 1
+    Loop
+    If onazi = 9 Then Exit Do				'エ
+    quOut = (quOut + 1) Mod 50      'キューから除く
+  Loop
+  If uni_max < 100 Then
+    i = 1
+    Do While que(quIn, 8 + i) <> 0
+      Cells(1, i) = que(quIn, 8 + i)
+      i = i + 1
+    Loop
+  Else
+    Range("A1") = "できません"
+  End If
+End Sub
+
+[119]
+Sub 腕づく法で最適解を求める()
+  Const n = 5
+  Dim a(10) As Integer
+  Dim ans(10) As Integer
+  Dim i As Integer
+  Dim j As Integer
+  Dim kazu As Long
+  Dim chk As Integer
+  Dim tmp As Long
+  Dim wa As Integer
+  Dim min_wa As Integer
+  min_wa = 10000
+  '順列生成
+  For kazu = 0 To n ^ n - 1				'ア
+    tmp = kazu
+    For i = 0 To n - 1
+      a(i) = tmp Mod n
+      tmp = tmp \ n
+    Next i
+    chk = 0
+    For i = 0 To n - 2
+      For j = i + 1 To n - 1
+        If a(i) = a(j) Then chk = 1
+      Next j
+    Next i
+    '腕づく法
+    If chk = 0 Then
+      wa = 0
+      For i = 0 To n - 1
+        wa = wa + Cells(a(i) + 1, i + 1)
+      Next i
+      If min_wa > wa Then				'イ
+        min_wa = wa
+        For i = 0 To n - 1
+          ans(i) = a(i)
+        Next i
+      End If
+    End If
+  Next kazu
+  Range("A7") = min_wa
+  For i = 0 To n - 1
+    Cells(8, i + 1) = ans(i) + 1
+  Next i
+End Sub
+
+[120]
+Sub 欲張り法で解を求める()
+  Const n = 5
+  Dim mat(10, 10) As Integer
+  Dim ans(10) As Integer
+  Dim i As Integer
+  Dim j As Integer
+  Dim x As Integer
+  Dim y As Integer
+  Dim x_iti As Integer
+  Dim y_iti As Integer
+  Dim min As Integer
+  Dim min_wa As Integer
+  'データ読み取り
+  For i = 1 To 5
+    For j = 1 To 5
+      mat(i, j) = Cells(i, j)
+    Next j
+  Next i
+  min_wa = 0
+  For i = 1 To 5				'ア
+    min = 1000
+    For y = 1 To 5
+      For x = 1 To 5
+        If min > mat(y, x) Then
+          min = mat(y, x)
+          x_iti = x			'イ
+          y_iti = y
+          ans(x) = y
+        End If
+      Next x
+    Next y
+    min_wa = min_wa + min
+    For j = 1 To 5				'ウ
+      mat(y_iti, j) = 1000
+      mat(j, x_iti) = 1000
+    Next j
+  Next i
+  Range("A7") = min_wa
+  For i = 1 To 5
+    Cells(8, i) = ans(i)
+  Next i
+End Sub
+
+[121]
+Sub 最短時間を求める()
+  Dim rt(10, 10) As Integer
+  Dim kyori As Integer
+  Dim min As Integer
+  Dim he As Integer
+  Dim kara As Integer
+  Dim iti As Integer
+  Dim i As Integer
+  Dim j As Integer
+  For i = 1 To 10
+    For j = 1 To 10
+      rt(i, j) = 9999
+    Next j
+  Next i
+  rt(1, 2) = 5
+  rt(1, 3) = 2
+  rt(2, 4) = 3
+  rt(2, 5) = 4
+  rt(3, 5) = 2
+  rt(3, 6) = 6
+  rt(4, 5) = 4
+  rt(4, 7) = 4
+  rt(5, 6) = 5
+  rt(5, 7) = 2
+  rt(5, 8) = 3
+  rt(6, 8) = 2
+  rt(7, 9) = 4
+  rt(8, 9) = 4
+  kyori = 0
+  kara = 1
+  iti = 1
+  Do While kara < 9			'ア
+    min = 100
+    For i = 1 To 9				'イ
+      If min > rt(kara, i) Then
+        min = rt(kara, i)
+        he = i
+      End If
+    Next i
+    kyori = kyori + min
+    Cells(iti, 1) = kara
+    Cells(iti, 2) = "->"
+    Cells(iti, 3) = he
+    iti = iti + 1
+    kara = he
+  Loop
+  Cells(iti + 1, 1) = kyori
+End Sub
+
+[122]
+Sub すべての経路を求める()
+  Dim rt(10, 10) As Integer
+  Dim stack(20, 2) As Integer
+  Dim pointer As Integer
+  Dim iti As Integer
+  Dim i As Integer
+  Dim j As Integer
+  For i = 1 To 10
+    For j = 1 To 10
+      rt(i, j) = 0
+    Next j
+  Next i
+  rt(1, 1) = 2
+  rt(1, 2) = 3
+  rt(2, 1) = 4
+  rt(2, 2) = 5
+  rt(3, 1) = 5
+  rt(3, 2) = 6
+  rt(4, 1) = 5
+  rt(4, 2) = 7
+  rt(5, 1) = 6
+  rt(5, 2) = 7
+  rt(5, 3) = 8
+  rt(6, 1) = 8
+  rt(7, 1) = 9
+  rt(8, 1) = 9
+  pointer = 1
+  stack(pointer, 1) = 1
+  stack(pointer, 2) = 1
+  iti = 1
+  Do While pointer > 0
+    If stack(pointer, 1) = 9 Then   '解出力				'ア
+      i = 0
+      Do
+        i = i + 1
+        Cells(iti, i) = stack(i, 1)
+      Loop While stack(i, 1) <> 9
+      iti = iti + 1
+    End If
+    If rt(stack(pointer, 1), stack(pointer, 2)) <> 0 Then  '次に行ける	'イ
+      pointer = pointer + 1                                'スタックを積む
+      stack(pointer, 1) = rt(stack(pointer - 1, 1), stack(pointer - 1, 2))
+      stack(pointer, 2) = 1
+    Else
+      If rt(stack(pointer, 1), stack(pointer, 2) + 1) = 0 Then  　　	'ウ
+'手詰まり　スタックを下す
+        pointer = pointer - 1
+      End If
+      stack(pointer, 2) = stack(pointer, 2) + 1
+    End If
+  Loop
+End Sub
+
+[123]
+Sub 農夫と狼と羊とキャベツの問題を解く()
+  Dim rt(20, 10) As Integer
+  Dim stack(20, 2) As Integer
+  Dim pointer As Integer
+  Dim i As Integer
+  Dim j As Integer
+  Dim iti As Integer
+  For i = 1 To 10
+    For j = 1 To 10
+      rt(i, j) = 0
+    Next j
+  Next i
+  rt(1, 1) = 4
+  rt(2, 1) = 5
+  rt(2, 2) = 8
+  rt(3, 1) = 5
+  rt(3, 2) = 9
+  rt(4, 1) = 3
+  rt(5, 1) = 2
+  rt(5, 2) = 3
+  rt(6, 1) = 8
+  rt(6, 2) = 9
+  rt(7, 1) = 10
+  rt(8, 1) = 2
+  rt(8, 2) = 6
+  rt(8, 3) = 7
+  rt(9, 1) = 3
+  rt(9, 2) = 6
+  pointer = 1
+  stack(pointer, 1) = 1
+  stack(pointer, 2) = 1
+  iti = 1
+  Do While pointer > 0
+    If stack(pointer, 1) = 10 Then   '解出力					'ア
+      i = 0
+      Do
+        i = i + 1
+        Cells(iti, i) = stack(i, 1)
+      Loop While stack(i, 1) <> 10
+      iti = iti + 1
+    End If
+    If rt(stack(pointer, 1), stack(pointer, 2)) <> 0 Then  '次に行ける		'イ
+      For i = 1 To pointer                                 '前に出た手か	'ウ
+        If stack(i, 1) = rt(stack(pointer, 1), stack(pointer, 2)) Then Exit For
+      Next i
+      i = i - 1
+      If pointer = i Then                                   '初めての手
+        pointer = pointer + 1                               'スタックを積む
+        stack(pointer, 1) = rt(stack(pointer - 1, 1), stack(pointer - 1, 2))
+        stack(pointer, 2) = 1
+      Else
+        stack(pointer, 2) = stack(pointer, 2) + 1           'まだ手がある
+      End If
+    Else
+      pointer = pointer - 1
+      stack(pointer, 2) = stack(pointer, 2) + 1
+    End If
+  Loop
+End Sub
+
+[124]
+Sub 動的計画法で最大価格を求める()
+  Dim weight(10) As Integer
+  Dim price(10) As Integer
+  Dim knap(50) As Integer
+  Dim n As Integer
+  Dim max As Integer
+  Dim weight_m As Integer
+  Dim i As Integer
+  Dim j As Integer
+  Dim iti As Integer
+  iti = 1
+  Do While Cells(1, iti) <> ""
+    weight(iti) = Cells(1, iti)
+    price(iti) = Cells(2, iti)
+    iti = iti + 1
+  Loop
+  n = iti - 1
+  weight_m = 0
+  For i = 1 To n
+    weight_m = weight_m + weight(i)
+  Next i
+  For i = 1 To 50
+    knap(i) = 0
+  Next i
+  For i = 1 To n
+    For j = weight_m To 1 Step -1
+      If 1 <= knap(j) Then					'ア
+        If knap(j + weight(i)) < knap(j) + price(i) Then	'イ
+          knap(j + weight(i)) = knap(j) + price(i)
+        End If
+      End If
+    Next j
+    If knap(weight(i)) < price(i) Then				'ウ
+      knap(weight(i)) = price(i)
+    End If
+  Next i
+  max = 0
+  For i = 1 To Cells(3, 1)
+    If max < knap(i) Then max = knap(i)
+  Next
+  Cells(4, 1) = max
+End Sub
+
+[125]
+Sub 数字タイルパズルを解く()
+  Dim moto(20) As Variant
+  Dim kari(20) As Integer
+  Dim ita As Variant
+  Dim i As Integer
+  Dim j As Integer
+  Dim k As Integer
+  Dim l As Integer
+  Dim iti As Integer
+  Dim tmp As Integer
+  Dim t1a As Integer
+  Dim t1b As Integer
+  Dim t2a As Integer
+  Dim t2b As Integer
+  Dim min As Integer
+  '板データ
+  ita = Array(1, 5, -3, 1, 1, 4, 4, 5)
+  '盤初期化　読込み
+  For i = 0 To 20
+    moto(i) = 0
+  Next i
+  For j = 3 To 11 Step 4
+    For i = 1 To 3
+      moto(j + i) = Cells(0.25 * j + 0.25, i)
+    Next i
+  Next j
+  iti = 1
+  min = 9999
+  For i = 4 To 14						'ア
+    '駒1つ目
+    For j = 0 To 6 Step 2					'イ
+      '盤リセット
+      For m = 0 To 19
+        kari(m) = moto(m)
+      Next m
+      If kari(i) <> 0 Then		
+        If kari(i + ita(j)) <> 0 And kari(i + ita(j + 1)) <> 0 Then
+          kari(i) = 0
+          kari(i + ita(j)) = 0
+          kari(i + ita(j + 1)) = 0
+          '駒ふたつめ
+          For k = i + 1 To 14					'ウ
+            If kari(k) <> 0 Then
+              For l = 0 To 6 Step 2					'エ
+                If kari(k + ita(l)) <> 0 And kari(k + ita(l + 1)) <> 0 Then	
+                  '置けた
+                  Cells(iti, 5) = i
+                  Cells(iti, 6) = j
+                  Cells(iti, 7) = k
+                  Cells(iti, 8) = l
+                  tmp = 0
+                  For m = 4 To 14
+                    tmp = tmp + kari(m)
+                  Next m
+                  tmp = tmp - kari(k) - kari(k + ita(l)) - kari(k + ita(l + 1))
+                  Cells(iti, 9) = tmp
+                  iti = iti + 1
+                  If min > tmp Then
+                    min = tmp
+                    t1a = i
+                    t1b = j
+                    t2a = k
+                    t2b = l
+                  End If
+                End If
+              Next l
+            End If
+          Next k
+        End If
+      End If
+    Next j
+  Next i
+  moto(t1a) = "■"
+  moto(t1a + ita(t1b)) = "■"
+  moto(t1a + ita(t1b + 1)) = "■"
+  moto(t2a) = "□"
+  moto(t2a + ita(t2b)) = "□"
+  moto(t2a + ita(t2b + 1)) = "□"
+  For i = 1 To 3
+    For j = 1 To 3
+      Cells(i, j) = moto(i * 4 + j - 1)
+    Next j
+  Next i
+End Sub
+
+[126]
+Sub 再帰呼び出しで階乗を求める()
+  Dim n As Integer
+  Dim a As Integer
+  n = Range("A1")
+  a = 階乗fun(n)
+  Range("A2") = a
+End Sub
+Function 階乗fun(ByVal n As Integer) As Integer
+  If n = 1 Then						'ア
+    階乗fun = 1
+  Else
+    階乗fun = n * 階乗fun(n - 1)			'イ
+  End If
+End Function
+
+[127]
+Sub 再帰呼び出しでフィボナッチ数列を求める()
+  Range("A2") = フィボナッチfun(Range("A1"))
+End Sub
+Function フィボナッチfun(ByVal n As Integer) As Integer
+  If n = 1 Then									'ア
+    フィボナッチfun = 0
+  Else
+    If n = 2 Then								'イ
+      フィボナッチfun = 1
+    Else
+      フィボナッチfun = フィボナッチfun(n - 1) + フィボナッチfun(n - 2)		'ウ
+    End If
+  End If
+End Function
+
+[128]
+Sub 迷路を解く()
+  Dim mat(10, 10) As Integer
+  Dim i As Integer
+  Dim j As Integer
+  Dim n As Integer
+  Dim m As Integer
+  Dim px As Integer
+  Dim py As Integer
+  n = 8
+  m = 9
+  For i = 1 To n
+    For j = 1 To m
+      If Cells(i, j) = "" Then
+        mat(j, i) = 1
+      Else
+        mat(j, i) = Cells(i, j)
+      End If
+      If Cells(i, j) = 2 Then
+        px = i
+        py = j
+      End If
+    Next j
+  Next i
+  Call maze(mat(), px, py, n, m)
+End Sub
+Sub maze(mat() As Integer, px As Integer, py As Integer, m As Integer, n As Integer)
+  Dim i As Integer
+  If mat(px, py) = 3 Then '３はゴール
+  For i = 1 To m
+    For j = 1 To n
+      Cells(i + 15, j) = mat(j, i)
+    Next j
+  Next i
+  Application.wait (Now() + TimeValue("00:00:01"))
+  Exit Sub
+  End If
+  mat(px, py) = 4 '4は通過済み
+  If mat(px + 1, py) < 4 Then				'ア
+    px = px + 1
+    Call maze(mat(), px, py, n, m)
+    px = px - 1
+    rt = rt - 1
+  End If
+  If mat(px - 1, py) < 4 Then				'イ
+    px = px - 1
+    Call maze(mat(), px, py, n, m)
+    px = px + 1
+    rt = rt - 1
+  End If
+  If mat(px, py + 1) < 4 Then				'ウ
+    py = py + 1
+    Call maze(mat(), px, py, n, m)
+    py = py - 1
+    rt = rt - 1
+  End If
+  If mat(px, py - 1) < 4 Then				'エ
+    py = py - 1
+    Call maze(mat(), px, py, n, m)
+    py = py + 1
+    rt = rt - 1
+  End If
+  mat(px, py) = 1      '未通過は１
+End Sub
+
+[129]
+Sub 多角形の面積を求める1()
+  Dim mat(10, 2) As Double
+  Dim wa As Double
+  Dim i As Integer
+  Dim n As Integer
+  i = 1
+  Do									'ア
+    mat(i, 1) = Cells(1, i)
+    mat(i, 2) = Cells(2, i)
+    i = i + 1
+  Loop While Cells(1, i) <> ""
+  mat(i, 1) = mat(1, 1)
+  mat(i, 2) = mat(1, 2)
+  n = i - 1
+  wa = 0
+  For i = 1 To n	
+    wa = wa + mat(i, 1) * mat(i + 1, 2) - mat(i, 2) * mat(i + 1, 1)	'イ
+  Next i
+  Range("A3") = Abs(wa) / 2						'ウ
+End Sub
+
+[130]
+Sub 多角形の面積を求める2()
+  Dim mat(10, 2) As Double
+  Dim wa As Double
+  Dim x0 As Double
+  Dim y0 As Double
+  Dim i As Integer
+  Dim n As Integer
+  i = 1
+  Do
+    mat(i, 1) = Cells(1, i)
+    mat(i, 2) = Cells(2, i)
+    i = i + 1
+  Loop While Cells(1, i) <> ""
+  mat(i, 1) = mat(1, 1)				'ア
+  mat(i, 2) = mat(1, 2)
+  n = i - 1
+  wa = 0
+  x0 = 0
+  y0 = 0
+  For i = 1 To n
+    wa = wa + ((mat(i + 1, 1) - mat(i, 1)) * (y0 - mat(i, 2)) - (x0 - mat(i, 1)) * (mat(i + 1, 2) - mat(i, 2))) / 2　				'イ
+  Next i
+  Range("A3") = Abs(wa)				'ウ
+End Sub
+
+[131]
+Sub ベクトルの方向を求める()
+  Dim x1 As Double
+  Dim y1 As Double
+  Dim x2 As Double
+  Dim y2 As Double
+  x1 = Range("A1")
+  y1 = Range("B1")
+  x2 = Range("A2")
+  y2 = Range("B2")
+  If x1 * y2 - x2 * y1 < 0 Then			'ア
+    Range("A3") = "右"
+  Else
+    Range("A3") = "左"
+  End If
+End Sub
+
+[132]
+Sub 三点間の角度を求める()
+  Const eps = 0.0000000001
+  Dim x0 As Single
+  Dim y0 As Single
+  Dim xa As Single
+  Dim ya As Single
+  Dim xb As Single
+  Dim yb As Single
+  Dim x As Single
+  Dim theta As Single
+  x0 = Range("A1")
+  y0 = Range("A2")
+  xa = Range("B1")
+  ya = Range("B2")
+  xb = Range("C1")
+  yb = Range("C2")
+  xa = xa - x0
+  ya = ya - y0
+  xb = xb - x0
+  yb = yb - y0
+  x = (xa * xb + ya * yb) / Sqr((xa ^ 2 + ya ^ 2) * (xb ^ 2 + yb ^ 2))		'ア
+  If (1 - x ^ 2) < eps Then
+   If xa * xb < 0 Or ya * yb < 0 Then						'イ
+    theta = 3.1415926536
+   Else
+    theta = 0
+   End If
+  Else
+    theta = Atn(-x / Sqr(1 - x ^ 2)) + 2 * Atn(1)
+  End If
+  If xa * yb - xb * ya < 0 Then theta = 2 * 3.1415936 - theta
+  Range("A5") = theta * 180 / 3.1415936
+End Sub
+
+[133]
+Sub 線分の交点座標を求める()
+  Dim a As Double
+  Dim b As Double
+  Dim c As Double
+  Dim x11 As Double
+  Dim y11 As Double
+  Dim x12 As Double
+  Dim y12 As Double
+  Dim x21 As Double
+  Dim y21 As Double
+  Dim x22 As Double
+  Dim y22 As Double
+  Dim eps As Double
+  Const eps = 0.0000001
+  x11 = Range("A1")
+  y11 = Range("A2")
+  x12 = Range("B1")
+  y12 = Range("B2")
+  x21 = Range("C1")
+  y21 = Range("C2")
+  x22 = Range("D1")
+  y22 = Range("D2")
+  c = (x12 - x11) * (y22 - y21) - (y12 - y11) * (x22 - x21)			'ア
+  If Abs(c) < eps Then
+    Range("E1") = "並行"
+  Else
+    a = ((x12 - x11) * (y11 - y21) - (y12 - y11) * (x11 - x21)) / c		'イ
+    b = ((x22 - x21) * (y11 - y21) - (y22 - y21) * (x11 - x21)) / c
+    If 0 <= a And a <= 1 And 0 <= b And b <= 1 Then
+      Range("E1") = x21 + a * (x22 - x21)
+      Range("E2") = y21 + a * (y22 - y21)
+    Else
+      Range("E1") = "なし"
+    End If
+  End If
+End Sub
+
+[134]
+Sub 多角形の内に指定した点はあるか()
+  Dim zukei(10, 2) As Single
+  Dim ten(2) As Single
+  Dim a As Single
+  Dim b As Single
+  Dim c As Single
+  Dim n As Integer
+  Dim kazu As Integer
+  Dim i As Integer
+  n = 1
+  Do While Cells(n, 1) <> ""
+    zukei(n, 1) = Cells(n, 1)
+    zukei(n, 2) = Cells(n, 2)
+    n = n + 1
+  Loop
+  zukei(n, 1) = zukei(1, 1)
+  zukei(n, 2) = zukei(1, 2)
+  ten(1) = Range("C1")
+  ten(2) = Range("D1")
+  kazu = 0
+  For i = 1 To n - 1					'ア
+    c = (zukei(i + 1, 1) - zukei(i, 1)) * (1000 - ten(2)) - (zukei(i + 1, 2) - zukei(i, 2)) * (1000 - ten(1))
+    If Abs(c) > 0.00001 Then
+      a = ((zukei(i + 1, 1) - zukei(i, 1)) * (zukei(i, 2) - ten(2)) - (zukei(i + 1, 2) - zukei(i, 2)) * (zukei(i, 1) - ten(1))) / c
+      　　b = ((1000 - ten(1)) * (zukei(i, 2) - ten(2)) - (1000 - ten(2)) * (zukei(i, 1) - ten(1))) / c
+      If 0 <= a And a < 1 And 0 <= b And b < 1 Then kazu = kazu + 1
+    　　End If
+  　　Next i
+  　　If kazu Mod 2 = 0 Then				'イ
+    　　Cells(3, 3) = "外"
+  　　Else
+    　　Cells(3, 3) = "内"
+  　　End If
+End Sub
+
+[135]
+Sub 凸包問題を解く()
+  Dim mat(2, 20) As Single
+  Dim tmp As Single
+  Dim xa As Single
+  Dim ya As Single
+  Dim x0 As Single
+  Dim y0 As Single
+  Dim xb As Single
+  Dim yb As Single
+  Dim theta As Single
+  Dim min As Single
+  Dim p0 As Integer
+  Dim pa As Integer
+  Dim i As Integer
+  Dim j As Integer
+  Dim k As Integer
+  Dim n As Integer
+  Dim iti As Integer
+  Dim eps As Single
+  eps = 0.0000001
+  'データ入力
+  For i = 1 To 2
+    n = 1
+    Do While Cells(i, n) <> ""
+      mat(i, n) = Cells(i, n)
+      n = n + 1
+    Loop
+    n = n - 1
+  Next i
+  'ソート
+  For i = 1 To n - 1
+    For j = i + 1 To n
+      If mat(1, i) > mat(1, j) Then
+        For k = 1 To 2                 '列数
+          tmp = mat(k, i)
+          mat(k, i) = mat(k, j)
+          mat(k, j) = tmp
+        Next k
+      End If
+    Next j
+  Next i
+  tmp = mat(1, 1)
+  kara = 1
+  made = 1
+  Do While made < n
+    Do
+      made = made + 1
+    Loop While tmp = mat(1, made)
+    made = made - 1
+    For i = kara To made - 1					'ア
+      For j = i + 1 To made
+        If mat(2, i) > mat(2, j) Then
+          For k = 1 To 2
+            tmp = mat(k, i)
+            mat(k, i) = mat(k, j)
+            mat(k, j) = tmp
+          Next k
+        End If
+      Next j
+    Next i
+    kara = made + 1
+    tmp = mat(1, kara)
+  Loop
+  '準備
+  x0 = mat(1, 1)
+  y0 = mat(2, 1)
+  xa = mat(1, 1) - 1
+  ya = mat(2, 1)
+  p0 = 1
+  pa = 0
+  iti = 1
+  Cells(4, iti) = mat(1, 1)
+  Cells(5, iti) = mat(2, 1)
+  iti = iti + 1
+  Do
+    xa = xa - x0
+    ya = ya - y0
+    minc = 999
+    For i = 1 To n						'イ
+      If i <> p0 And i <> pa Then
+        xb = mat(1, i) - x0
+        yb = mat(2, i) - y0
+        x = (xa * xb + ya * yb) / Sqr((xa ^ 2 + ya ^ 2) * (xb ^ 2 + yb ^ 2))
+        If (1 - x ^ 2) < eps Then
+          If xa * xb < 0 Or ya * yb < 0 Then
+            theta = 3.1415926536
+          Else
+            theta = 0
+          End If
+        Else
+          theta = Atn(-x / Sqr(1 - x ^ 2)) + 2 * Atn(1)
+        End If
+        If xa * yb - xb * ya < 0 Then theta = 2 * 3.1415936 - theta
+        If minc > theta Then					'ウ
+          minc = theta
+          minp = i
+        End If
+      End If
+    Next i
+    Cells(4, iti) = mat(1, minp)
+    Cells(5, iti) = mat(2, minp)
+    iti = iti + 1
+    xa = x0
+    ya = y0
+    x0 = mat(1, minp)
+    y0 = mat(2, minp)
+    pa = p0
+    p0 = minp
+  Loop While minp <> 1
+End Sub
+
+[136]
+Sub 最小2乗法で直線を引く1()
+  Dim sx As Single
+  Dim sy As Single
+  Dim sx2 As Single
+  Dim sxy As Single
+  Dim n As Single
+  Dim iti As Integer
+  sx = 0
+  sy = 0
+  sxy = 0
+  sx2 = 0
+  n = 0
+  iti = 2
+  Do								'ア
+    sx = sx + Cells(iti, 1)
+    sy = sy + Cells(iti, 2)
+    sxy = sxy + Cells(iti, 1) * Cells(iti, 2)
+    sx2 = sx2 + Cells(iti, 1) ^ 2
+    n = n + 1
+    iti = iti + 1
+  Loop While Cells(iti, 1) <> 0
+  Range("A14") = (n * sxy - sx * sy) / (n * sx2 - sx ^ 2)	'イ
+  Range("B14") = sy / n - Range("A14") * sx / n
+End Sub
+
+[137]
+Sub 最小2乗法で直線を引く2()
+  Dim sx As Single
+  Dim sy As Single
+  Dim sx2 As Single
+  Dim sxy As Single
+  Dim cx As Single
+  Dim cy As Single
+  Dim n As Single
+  Dim iti As Integer
+  sx = 0
+  sy = 0
+  sxy = 0
+  sx2 = 0
+  n = 0
+  iti = 2
+  Do							'ア
+    sx = sx + Cells(iti, 1)
+    sy = sy + Cells(iti, 2)
+    sxy = sxy + Cells(iti, 1) * Cells(iti, 2)
+    sx2 = sx2 + Cells(iti, 1) ^ 2
+    n = n + 1
+    iti = iti + 1
+  Loop While Cells(iti, 1) <> 0
+  cx = Range("A14")
+  cy = Range("B14")
+  Range("A17") = (sxy - cy * sx - cx * sy + n * cx * cy) / (sx2 - 2 * cx * sx + n * cx ^ 2)	'イ
+  Range("B17") = cy - Range("A17") * cx
+End Sub
+
+[138]
+Sub 直交回帰直線を引く()
+  Dim sxx As Single
+  Dim syy As Single
+  Dim sxy As Single
+  Dim xb As Single
+  Dim yb As Single
+  Dim a As Single
+  Dim b As Single
+  Dim n As Single
+  Dim iti As Integer
+  sxx = 0
+  syy = 0
+  sxy = 0
+  xb = 0
+  yb = 0
+  n = 0
+  iti = 2
+  Do						'ア
+    xb = xb + Cells(iti, 1)
+    yb = yb + Cells(iti, 2)
+    n = n + 1
+    iti = iti + 1
+  Loop While Cells(iti, 1) <> ""
+  xb = xb / n
+  yb = yb / n
+  iti = 2
+  Do						'イ
+    sxx = sxx + (Cells(iti, 1) - xb) ^ 2
+    syy = syy + (Cells(iti, 2) - yb) ^ 2
+    sxy = sxy + (Cells(iti, 1) - xb) * (Cells(iti, 2) - yb)
+    iti = iti + 1
+  Loop While Cells(iti, 1) <> ""
+  sxx = sxx / n					'ウ
+  syy = syy / n
+  sxy = sxy / n
+  a = (syy - sxx + Sqr((sxx - syy) ^ 2 + 4 * sxy ^ 2)) / (2 * sxy)
+  b = yb - a * xb
+  Range("A14") = a
+  Range("B14") = b
+End Sub
+
+[139]
+Sub 多項式近似で曲線を引く()
+  Dim mat(20, 20) As Single
+  Dim x(100) As Single
+  Dim y(100) As Single
+  Dim tmp As Single
+  Dim n As Integer
+  Dim dt As Integer
+  Dim i As Integer
+  Dim j As Integer
+  Dim k As Integer
+  Dim iti As Integer
+  'データ入力
+  iti = 2
+  dt = 0
+  Do
+    dt = dt + 1
+    x(dt) = Cells(iti, 1)         '1番から使用
+    y(dt) = Cells(iti, 2)
+    iti = iti + 1
+  Loop While Cells(iti, 1) <> ""
+  n = Range("C2")
+  For i = 0 To n
+    For j = 0 To n
+      mat(i, j) = 0
+    Next j
+  Next i
+  For i = 0 To n						'ア
+      For k = 1 To dt
+        mat(i, 0) = mat(i, 0) + x(k) ^ i
+      Next k
+  Next i
+  For k = 1 To dt						'イ
+    mat(n + 1, 0) = mat(n + 1, 0) + y(k)
+  Next k
+  For i = 1 To n						'ウ
+    For j = 0 To n - 1
+      mat(j, i) = mat(j + 1, i - 1)
+    Next j
+    For k = 1 To dt
+      mat(n, i) = mat(n, i) + x(k) ^ (i + n)
+      mat(n + 1, i) = mat(n + 1, i) + (x(k) ^ (i)) * y(k)
+    Next k
+  Next i
+  '掃き出し法							'エ
+  For i = 0 To n
+    tmp = mat(i, i)
+    For j = i To n + 1
+      mat(j, i) = mat(j, i) / tmp
+    Next j
+    For k = 0 To n
+      If i <> k Then
+        tmp = mat(i, k)
+        For j = i To n + 1
+          mat(j, k) = mat(j, k) - mat(j, i) * tmp
+        Next j
+      End If
+    Next k
+  Next i
+  For i = 0 To n
+    Cells(i + 1, 4) = "x^" & i
+    Cells(i + 1, 5) = mat(n + 1, i)
+  Next i
+End Sub
+
+[140]
+Sub ラグランジュ補間で曲線を引く()
+  Const dots = 10
+  Dim x(10) As Single
+  Dim y(10) As Single
+  Dim dot_x As Single
+  Dim dot_y As Single
+  Dim pro As Single
+  Dim n As Integer
+  n = 0
+  Do While Cells(n + 1, 1) <> ""
+    x(n) = Cells(n + 1, 1)
+    y(n) = Cells(n + 1, 2)
+    n = n + 1
+  Loop
+  n = n - 1
+  For i = 0 To dots - 1
+    dot_x = x(0) + ((x(n) - x(0)) / (dots - 1)) * I			'ア
+    Cells(1 + i, 4) = dot_x
+    dot_y = 0
+    For j = 0 To n
+      pro = 1
+      For k = 0 To n
+        If j <> k Then pro = pro * (dot_x - x(k)) / (x(j) - x(k))	'イ
+      Next k
+      dot_y = dot_y + pro * y(j)
+    Next j
+    Cells(i + 1, 5) = dot_y
+  Next i
+End Sub
+
+[141]
+Sub ニュートンの補間で曲線を引く()
+  Dim x(10) As Single
+  Dim c(10) As Single
+  Dim ans As Single
+  Dim h As Single
+  Dim i As Integer
+  Dim j As Integer
+  Dim n As Integer
+  Dim iti As Integer
+  n = 1
+  Do While Cells(n, 1) <> ""
+    x(n) = Cells(n, 1)
+    c(n) = Cells(n, 2)
+    n = n + 1
+  Loop
+  n = n - 1
+  iti = 1
+  For i = 1 To n
+    For j = n To i + 1 Step -1
+      c(j) = (c(j) - c(j - 1)) / (x(j) - x(j - i))
+    Next j
+  Next i
+  For h = x(1) To x(n) Step 0.5
+    ans = c(n)
+    For i = n - 1 To 1 Step -1
+      ans = ans * (h - x(i)) + c(i)
+    Next i
+    Cells(iti, 4) = h
+    Cells(iti, 5) = ans
+    iti = iti + 1
+  Next h
+End Sub
+
+[142]
+Sub ガウス消去法で連立一次方程式を解く()
+  Dim mat(11, 10) As Double
+  Dim i As Integer
+  Dim j As Integer
+  Dim k As Integer
+  Dim n As Integer
+  Dim tmp As Double
+  n = 3
+  For i = 1 To n  'データ読み込
+    For j = 1 To n + 1
+      mat(j, i) = Cells(i, j).Value
+    Next j
+  Next i
+  '前進消去						'ア
+  For i = 1 To n
+    tmp = mat(i, i)
+    For j = 1 To n + 1
+      mat(j, i) = mat(j, i) / tmp
+    Next j
+    For k = i + 1 To n
+      tmp = mat(i, k)
+      For j = 1 To n + 1
+        mat(j, k) = mat(j, k) / tmp - mat(j, i)
+      Next j
+    Next k
+  Next i
+  '後退代入						'イ
+  For i = n - 1 To 1 Step -1
+    For k = i To 1 Step -1
+      tmp = mat(i + 1, k)
+      For j = 1 To n + 1
+        mat(j, k) = mat(j, k) - mat(j, i + 1) * tmp
+      Next j
+    Next k
+  Next i
+  For i = 1 To n  '出力
+    For j = 1 To n + 1
+      Cells(i + n + 2, j) = mat(j, i)
+    Next j
+  Next i
+End Sub
+
+[143]
+Sub ガウスジョルダン法で連立一次方程式を解く()
+  Dim mat(11, 10) As Double
+  Dim i As Integer
+  Dim j As Integer
+  Dim k As Integer
+  Dim n As Integer
+  Dim tmp As Double
+  n = 3
+  For i = 1 To n  'データ読み込み
+    For j = 1 To n + 1
+      mat(j, i) = Cells(i, j).Value
+    Next j
+  Next i
+  For i = 1 To n
+    tmp = mat(i, i)
+    For j = 1 To n + 1				'ア
+      mat(j, i) = mat(j, i) / tmp
+    Next j
+    For k = 1 To n
+      If i <> k Then				'イ
+        tmp = mat(i, k)
+        For j = 1 To n + 1
+          mat(j, k) = mat(j, k) - mat(j, i) * tmp
+        Next j
+      End If
+    Next k
+  Next i
+  For i = 1 To n  '出力
+    For j = 1 To n + 1
+      Cells(i + n + 2, j) = mat(j, i)
+    Next j
+  Next i
+End Sub
+
+[144]
+Sub 逆行列を求める()
+  Dim mat(20, 10) As Double
+  Dim i As Integer
+  Dim j As Integer
+  Dim k As Integer
+  Dim n As Integer
+  Dim tmp As Double
+  n = 3
+  For i = 1 To n  'データ読み込み
+    For j = 1 To n + 1
+      mat(j, i) = Cells(i, j).Value
+    Next j
+  Next i
+  For i = 1 To n						'ア
+    For j = n + 1 To 2 * n
+      mat(j, i) = 0
+    Next j
+    mat(i + n, i) = 1
+  Next i
+  For i = 1 To n						'イ
+    tmp = mat(i, i)
+    For j = 1 To 2 * n
+      mat(j, i) = mat(j, i) / tmp
+    Next j
+    For k = 1 To n
+      If i <> k Then
+        tmp = mat(i, k)
+        For j = 1 To 2 * n
+          mat(j, k) = mat(j, k) - mat(j, i) * tmp
+        Next j
+      End If
+    Next k
+  Next i
+  For i = 1 To n  '出力						'ウ
+    For j = 1 To 2 * n
+      Cells(i + n + 2, j) = mat(j, i)
+    Next j
+  Next i
+End Sub
+
+[145]
+Sub 軸選択をする1()
+  Dim mat(11, 10) As Double
+  Dim i As Integer
+  Dim j As Integer
+  Dim k As Integer
+  Dim n As Integer
+  Dim tmp As Double
+  n = 4
+  For i = 1 To n  'データ読み込み
+    For j = 1 To n + 1
+      mat(j, i) = Cells(i, j).Value
+    Next j
+  Next i
+  For i = 1 To n
+    '軸選択
+    If i <> n Then					'ア
+      For k = i + 1 To n
+        If Abs(mat(i, i)) < Abs(mat(i, k)) Then
+          For j = 1 To n + 1
+            tmp = mat(j, k)
+            mat(j, k) = mat(j, i)
+            mat(j, i) = tmp
+          Next j
+        End If
+      Next k
+    End If
+    tmp = mat(i, i)					'イ
+    For j = 1 To n + 1
+      mat(j, i) = mat(j, i) / tmp
+    Next j
+    For k = 1 To n
+      If i <> k Then
+        tmp = mat(i, k)
+        For j = 1 To n + 1
+          mat(j, k) = mat(j, k) - mat(j, i) * tmp
+        Next j
+      End If
+    Next k
+  Next i
+  For i = 1 To n  '出力
+    For j = 1 To n + 1
+      Cells(i + n + 2, j) = mat(j, i)
+    Next j
+  Next i
+End Sub
+
+[146]
+Sub 軸選択をする2()
+  Dim mat(11, 10) As Double
+  Dim iti(10) As Integer
+  Dim i As Integer
+  Dim j As Integer
+  Dim k As Integer
+  Dim n As Integer
+  Dim tmp As Double
+  n = 4
+  For i = 1 To n
+    iti(i) = i
+  Next i
+  For i = 1 To n  'データ読み込み
+    For j = 1 To n + 1
+      mat(j, i) = Cells(i, j).Value
+    Next j
+  Next i
+  For i = 1 To n
+    '軸選択
+    dai = mat(i, i)					'ア
+    For j = i To n
+      For k = i To n
+        If Abs(dai) <= Abs(mat(j, k)) Then
+          dai = mat(j, k)
+          mx = j
+          my = k
+        End If
+      Next k
+    Next j
+    For j = i To n + 1		
+      td = mat(j, i)
+      mat(j, i) = mat(j, my)
+      mat(j, my) = td
+    Next j
+    For j = 1 To n
+      td = mat(i, j)
+      mat(i, j) = mat(mx, j)
+      mat(mx, j) = td
+    Next j
+    ti = iti(i)
+    iti(i) = iti(mx)
+    iti(mx) = ti
+    td = mat(i, i)					'イ
+    For j = 1 To n + 1
+      mat(j, i) = mat(j, i) / td
+    Next j
+    For k = 1 To n
+      If i <> k Then
+        tmp = mat(i, k)
+        For j = 1 To n + 1
+          mat(j, k) = mat(j, k) - mat(j, i) * tmp
+        Next j
+      End If
+    Next k
+  Next i
+  For i = 1 To n  '出力
+    Cells(iti(i), n + 3) = mat(n + 1, i)
+  Next i
+End Sub
+
+[147]
+Sub 遂次近似法で根を求める()
+  Dim x As Double
+  Dim y As Double
+  Dim hazime As Double
+  Dim owari As Double
+  Dim kizami As Double
+  hazime = 0
+  owari = 10
+  kizami = 1
+  Do
+    For x = hazime To owari Step kizami		'ア
+      y = x ^ 2 - Range("A1")
+      If Abs(y) < 0.00001 Then Exit Do
+      If y > 0 Then Exit For
+    Next x
+    hazime = x - kizami				'イ
+    owari = x
+    kizami = kizami / 10
+  Loop
+  Range("A2") = x
+End Sub
+
+[148]
+Sub 二分法で根を求める()
+  Dim xa As Double
+  Dim xb As Double
+  Dim xc As Double
+  Dim ya As Double
+  Dim yb As Double
+  xa = 0
+  xb = 10
+  Do
+    xc = (xa + xb) / 2				'ア
+    ya = xa ^ 2 - Range("A1")
+    yc = xc ^ 2 - Range("A1")
+    If ya * yc > 0 Then				'イ
+      xa = xc
+    Else
+      xb = xc
+    End If
+  Loop While Abs(yc) > 0.00001
+  Range("A2") = xc
+End Sub
+
+[149]
+Sub レギュラファルシ法で根を求める()
+  Dim xa As Double
+  Dim xb As Double
+  Dim xc As Double
+  Dim ya As Double
+  Dim yb As Double
+  Dim yc As Double
+  xa = 0
+  xb = 10
+  Do
+    ya = xa ^ 2 - Range("A1")
+    yb = xb ^ 2 - Range("A1")
+    xc = (xa * yb - xb * ya) / (yb - ya)		'ア
+    yc = xc ^ 2 - Range("A1")
+    If xa * xc < 0 Then					'イ
+      xb = xc
+    Else
+      xa = xc
+    End If
+  Loop While Abs(yc) > 0.00001
+  Range("A2") = xc
+End Sub
+
+[150]
+Sub ニュートンラプソン法で根を求める()
+  Dim xa As Double
+  Dim xb As Double
+  Dim y As Double
+  xa = 10
+  Do
+    xb = xa - (xa ^ 2 - Range("A1")) / (2 * xa)		'ア
+    y = xb ^ 2 - Range("A1")
+    xa = xb
+  Loop While Abs(y) > 0.00001
+  Range("A2") = xa
+End Sub
+
